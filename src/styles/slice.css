@@ -1,0 +1,263 @@
+.home-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4rem);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  margin-top: 2rem;
+  font-weight: 600;
+}
+
+.hero-actions a {
+  padding-block: 0.5rem;
+}
+
+/* Reserve the approved portrait crop until the asset is available. */
+.portrait-placeholder {
+  width: 100%;
+  max-width: 24rem;
+  aspect-ratio: 4 / 5;
+  background: #eeece5;
+  border: 1px solid var(--color-rule);
+}
+
+.editorial-section {
+  margin-top: clamp(3.5rem, 7vw, 6rem);
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--color-rule);
+}
+
+h2 {
+  margin: 0 0 1.5rem;
+  font-size: clamp(1.6rem, 3vw, 2.25rem);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+h3 {
+  margin: 0 0 1rem;
+  font-size: 1.125rem;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+.decision p {
+  margin-block: 0 1.5rem;
+}
+
+.project-attribution {
+  margin-block: 1.75rem 2.5rem;
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+
+.project-overview {
+  margin: 0;
+}
+
+.project-overview div + div {
+  margin-top: 1.5rem;
+}
+
+.project-overview dt {
+  font-weight: 650;
+  margin-bottom: 0.25rem;
+}
+
+.project-overview dd {
+  margin: 0;
+}
+
+.editorial-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin-block: 2rem;
+  text-align: left;
+}
+
+.editorial-table th,
+.editorial-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--color-rule);
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+.editorial-table thead th {
+  border-top: 1px solid var(--color-rule);
+  font-size: 0.9375rem;
+  background: #eeece5;
+}
+
+.editorial-table tbody th {
+  font-weight: 550;
+}
+
+.cell-label {
+  display: none;
+}
+
+.authority-evidence {
+  margin: 3rem 0;
+}
+
+.authority-evidence .editorial-table {
+  margin-top: 1rem;
+}
+
+figcaption {
+  color: var(--color-muted);
+  font-size: 0.9375rem;
+}
+
+.demonstrates {
+  border-left: 2px solid var(--color-accent);
+  padding-left: 1.5rem;
+  margin-block: 3rem;
+}
+
+.technical-detail {
+  border-block: 1px solid var(--color-rule);
+  padding-block: 1.25rem;
+}
+
+.technical-detail summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.technical-detail[open] summary {
+  margin-bottom: 1.5rem;
+}
+
+.technical-detail p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 47rem) {
+  .home-hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .editorial-table,
+  .editorial-table tbody,
+  .editorial-table tr,
+  .editorial-table th,
+  .editorial-table td {
+    display: block;
+  }
+
+  /* Keep column headers available to assistive technology. Explicit roles
+     and headers preserve relationships when cells stack visually. */
+  .editorial-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .editorial-table tr {
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .editorial-table th,
+  .editorial-table td {
+    padding: 0.75rem 0;
+    border: 0;
+  }
+
+  .editorial-table tr:last-child {
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .cell-label {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: var(--color-muted);
+    font-size: 0.8125rem;
+    font-weight: 650;
+  }
+}
+
+@media screen and (max-width: 47rem) {
+  .authority-evidence .editorial-table tbody th .cell-label {
+    display: none;
+  }
+
+  .authority-evidence .editorial-table tbody th {
+    font-size: 1rem;
+    font-weight: 650;
+  }
+}
+
+@media print {
+  .home-hero {
+    display: block;
+  }
+
+  .portrait-placeholder {
+    display: none;
+  }
+
+  .editorial-section {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+  }
+
+  .authority-evidence {
+    break-inside: avoid;
+  }
+
+  h2,
+  h3,
+  summary {
+    break-after: avoid;
+  }
+
+  .editorial-table {
+    display: table;
+    font-size: 10pt;
+  }
+
+  .editorial-table thead {
+    display: table-header-group;
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+    white-space: normal;
+  }
+
+  .editorial-table tbody {
+    display: table-row-group;
+  }
+
+  .editorial-table tr {
+    display: table-row;
+    break-inside: avoid;
+  }
+
+  .editorial-table th,
+  .editorial-table td {
+    display: table-cell;
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .cell-label {
+    display: none;
+  }
+}

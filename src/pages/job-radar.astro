@@ -1,17 +1,89 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
+import '../styles/slice.css';
 ---
 
 <SiteLayout
   title="Job Radar case study"
   description="How Avery Cooper designed Job Radar around human judgment, provenance, privacy, and reliable operation."
 >
-  <div class="reading-column page-intro">
+  <header class="reading-column case-intro">
     <p class="eyebrow">Case study</p>
     <h1>Job Radar</h1>
-    <p class="lede">
-      A private system for finding, evaluating, and preparing for the right opportunities
-      without automating the judgment that matters.
-    </p>
-  </div>
+    <p class="lede">A private production system for finding, evaluating, and preparing for the right opportunities—without automating the judgment that matters.</p>
+    <p class="project-attribution">Independent production project · Solo, AI-assisted development</p>
+    <dl class="project-overview">
+      <div><dt>Current state</dt><dd>Deployed and operating across a scheduled private-server service and a local Mac application-preparation workflow.</dd></div>
+      <div><dt>My role</dt><dd>Product definition, requirements, system and workflow design, implementation direction, review, validation, deployment, and ongoing production ownership.</dd></div>
+      <div><dt>Development approach</dt><dd>ChatGPT supported planning and architecture exploration, while Codex performed much of the direct repository implementation. I made the final design and product decisions, validated the resulting behavior, and accepted responsibility for the operating system.</dd></div>
+    </dl>
+  </header>
+  <section class="editorial-section decision" aria-labelledby="decision-heading">
+    <div class="reading-column">
+      <p class="eyebrow">Decision 03</p>
+      <h2 id="decision-heading">Separate systems according to privacy and responsibility</h2>
+      <p>Search needs to run on a schedule and retain public posting history. Application Prep contains sensitive career evidence, tailored materials, private notes, and employer activity. Placing everything in one database would simplify the architecture while unnecessarily expanding access to the most personal information.</p>
+    </div>
+    <table class="editorial-table" role="table">
+      <thead role="rowgroup">
+        <tr role="row">
+          <th scope="col" id="decision-0" role="columnheader">Constraint</th>
+          <th scope="col" id="decision-1" role="columnheader">Decision</th>
+          <th scope="col" id="decision-2" role="columnheader">Accepted tradeoff</th>
+        </tr>
+      </thead>
+      <tbody role="rowgroup">
+        <tr role="row">
+          <th scope="row" id="decision-row-0" headers="decision-0" role="rowheader"><span class="cell-label" aria-hidden="true">Constraint</span>Search needs scheduled availability, while private career data belongs in a local, human-controlled environment.</th>
+          <td headers="decision-1 decision-row-0" role="cell"><span class="cell-label" aria-hidden="true">Decision</span>Give Search and Application Prep separate data authority.</td>
+          <td headers="decision-2 decision-row-0" role="cell"><span class="cell-label" aria-hidden="true">Accepted tradeoff</span>Add a verified handoff between systems instead of sharing one database.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="reading-column">
+      <p>Search runs on my private server and remains authoritative for postings, snapshots, matches, and alerts. Application Prep runs on my Mac and remains authoritative for career evidence, applications, materials, and activity.</p>
+      <p>The Mac receives a verified read-only copy of Search history. It can use that information without modifying the authoritative record, while Search never receives the private career database.</p>
+      <p>This separation creates additional operational work: replicas must be transferred, verified, and checked for freshness. I accepted that complexity because system convenience was not a sufficient reason to broaden access or blur ownership.</p>
+    </div>
+    <figure class="authority-evidence" aria-labelledby="authority-heading">
+      <h3 id="authority-heading">Data authority boundary</h3>
+      <table class="editorial-table" role="table">
+      <thead role="rowgroup">
+        <tr role="row">
+          <th scope="col" id="authority-0" role="columnheader">System</th>
+          <th scope="col" id="authority-1" role="columnheader">Owns</th>
+          <th scope="col" id="authority-2" role="columnheader">Does not receive or control</th>
+        </tr>
+      </thead>
+      <tbody role="rowgroup">
+        <tr role="row">
+          <th scope="row" id="authority-row-0" headers="authority-0" role="rowheader"><span class="cell-label" aria-hidden="true">System</span>TrueNAS Search</th>
+          <td headers="authority-1 authority-row-0" role="cell"><span class="cell-label" aria-hidden="true">Owns</span>Postings, historical snapshots, matches, alerts</td>
+          <td headers="authority-2 authority-row-0" role="cell"><span class="cell-label" aria-hidden="true">Does not receive or control</span>Career evidence, application materials, private notes</td>
+        </tr>
+        <tr role="row">
+          <th scope="row" id="authority-row-1" headers="authority-0" role="rowheader"><span class="cell-label" aria-hidden="true">System</span>Mac Application Prep</th>
+          <td headers="authority-1 authority-row-1" role="cell"><span class="cell-label" aria-hidden="true">Owns</span>Career evidence, applications, materials, employer activity</td>
+          <td headers="authority-2 authority-row-1" role="cell"><span class="cell-label" aria-hidden="true">Does not receive or control</span>Authority to modify Search history</td>
+        </tr>
+      </tbody>
+    </table>
+      <p class="replica-direction"><strong>Verified read-only Search replica → Mac</strong></p>
+      <figcaption class="reading-column">Each system receives the information required for its responsibility without inheriting authority over the other system’s private or historical record.</figcaption>
+    </figure>
+    <aside class="demonstrates reading-column" aria-labelledby="demonstrates-heading">
+      <h3 id="demonstrates-heading">What this demonstrates</h3>
+      <p>I separate authority according to risk and responsibility, even when a single shared data store would be easier to implement.</p>
+    </aside>
+    <details class="technical-detail reading-column">
+      <summary>Technical detail: Read-only replication and data authority</summary>
+
+      <p>After Search evaluates new and changed postings, it creates a SQLite replica using the database backup interface and publishes a corresponding manifest. The manifest records the replica’s generation time and SHA-256 checksum.</p>
+
+      <p>The Mac pull workflow transfers the database and manifest as a pair, verifies their integrity and freshness, and installs them together. If the verified replica is already current, the operation completes as a safe no-op. An incomplete or unverifiable transfer does not replace the last trusted local copy.</p>
+
+      <p>Application Prep reads Search data through the configured replica but has no path for writing changes back to the authoritative Search history. The private Career database is never copied to TrueNAS.</p>
+
+    </details>
+  </section>
 </SiteLayout>

@@ -1,17 +1,25 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
+import '../styles/slice.css';
 ---
 
 <SiteLayout
   title="Avery Cooper"
   description="Avery Cooper brings structure to complicated work across Product Operations and Implementation."
 >
-  <div class="reading-column page-intro">
-    <p class="eyebrow">Product Operations &amp; Implementation</p>
-    <h1>I bring structure to complicated work.</h1>
-    <p class="lede">
-      I’m Avery Cooper. I help growing SaaS teams turn ambiguous, cross-functional work into
-      clear systems people can use, improve, and trust.
-    </p>
-  </div>
+  <section class="home-hero" aria-labelledby="hero-heading">
+    <div class="page-intro">
+      <h1 id="hero-heading">I bring structure to complicated work.</h1>
+      <p class="lede">I’m Avery Cooper, a Product Operations and Implementation leader. I help growing SaaS teams turn ambiguous, cross-functional work into clear systems people can use, improve, and trust.</p>
+      <div class="hero-actions">
+        <a href="/job-radar/">See how I work</a>
+        <a href="mailto:contact@avecooper.com?subject=Portfolio%20conversation">Start a conversation</a>
+      </div>
+    </div>
+    <div class="portrait-placeholder" aria-hidden="true"></div>
+  </section>
+  <section class="editorial-section reading-column" aria-labelledby="pattern-heading">
+    <h2 id="pattern-heading">A pattern in my work</h2>
+    <p>My career has moved through implementation, customer success, product management, consulting, and independent systems development. The titles changed as the scope expanded, but the underlying work remained remarkably consistent.</p>
+  </section>
 </SiteLayout>
