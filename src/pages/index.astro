@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import portrait from '../assets/images/avery-cooper-portrait.jpg';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import '../styles/slice.css';
 ---
@@ -16,10 +18,74 @@ import '../styles/slice.css';
         <a href="mailto:contact@avecooper.com?subject=Portfolio%20conversation">Start a conversation</a>
       </div>
     </div>
-    <div class="portrait-placeholder" aria-hidden="true"></div>
+    <Image
+      src={portrait}
+      alt="Black-and-white portrait of Avery Cooper."
+      class="home-portrait"
+      width={1433}
+      height={1910}
+      widths={[240, 384, 480, 768]}
+      sizes="(max-width: 47rem) min(24rem, calc(100vw - 2 * clamp(1.25rem, 5vw, 3rem))), min(24rem, calc((min(calc(100vw - 2 * clamp(1.25rem, 5vw, 3rem)), 72rem) - clamp(2rem, 5vw, 4rem)) / 2.7))"
+      priority
+    />
   </section>
-  <section class="editorial-section reading-column" aria-labelledby="pattern-heading">
+  <section class="home-section editorial-section reading-column" aria-labelledby="pattern-heading">
     <h2 id="pattern-heading">A pattern in my work</h2>
     <p>My career has moved through implementation, customer success, product management, consulting, and independent systems development. The titles changed as the scope expanded, but the underlying work remained remarkably consistent.</p>
+    <p>At YourMembership, I learned how to guide customers through complex implementations while coordinating the people, processes, and technology behind them.</p>
+    <p>At Twiage, my responsibilities grew from managing hospital client relationships to shaping the product and operating systems supporting a much larger network of healthcare providers. I translated field needs into product requirements, built analytics to make performance visible, and helped teams navigate a major cross-platform rebuild.</p>
+    <p>As a consultant, I brought the same approach to commerce, product information, analytics, QA, and operational workflows.</p>
+    <p>Across each chapter, I became the person who could understand the whole system, make the ambiguity legible, and stay accountable until the work actually functioned.</p>
+  </section>
+  <section class="home-section editorial-section reading-column" aria-labelledby="team-heading">
+    <h2 id="team-heading">What I bring to a team</h2>
+    <section class="home-value" aria-labelledby="structure-heading">
+      <h3 id="structure-heading">Structure that enables action</h3>
+      <p>I turn unclear goals and scattered knowledge into practical requirements, workflows, and decision boundaries. I add enough structure to help people move confidently without mistaking process for progress.</p>
+    </section>
+    <section class="home-value" aria-labelledby="translation-heading">
+      <h3 id="translation-heading">Translation across functions</h3>
+      <p>I connect product intent, operational reality, technical constraints, and customer needs. I help each group understand not only what was decided, but how that decision affects the work around it.</p>
+    </section>
+    <section class="home-value" aria-labelledby="preparation-heading">
+      <h3 id="preparation-heading">Confidence through preparation</h3>
+      <p>I surface hidden assumptions, ask what failure would look like, and make validation part of the work from the beginning. The goal is not certainty; it is confidence that the team understands the decision and is prepared to act.</p>
+    </section>
+    <section class="home-value" aria-labelledby="ownership-heading">
+      <h3 id="ownership-heading">Ownership through execution</h3>
+      <p>I stay engaged after the plan is written. I review what was built, adapt when new evidence appears, and reopen work when the result does not meet the original need. I remain accountable for whether the work functions in practice.</p>
+    </section>
+  </section>
+  <section class="home-section editorial-section reading-column" aria-labelledby="featured-heading">
+    <h2 id="featured-heading">Featured project</h2>
+    <h3>Job Radar</h3>
+    <p class="project-attribution"><strong>Independent production project · AI-assisted development</strong></p>
+    <p>I designed and led the solo development of Job Radar, a private system that monitors company career pages, preserves changing job history, evaluates potential matches, and supports application preparation and tracking.</p>
+    <p>The project began as a practical response to my own job search. It became a deeper exercise in designing reliable workflows around incomplete information, sensitive data, changing sources, and decisions that should remain human.</p>
+    <p>The case study examines five decisions behind the system:</p>
+    <ul class="home-decisions">
+      <li>preserving human judgment inside an automated workflow;</li>
+      <li>maintaining provenance as source information changes;</li>
+      <li>separating systems according to privacy and responsibility;</li>
+      <li>sharing only the minimum useful state;</li>
+      <li>making failure, recovery, and accountability visible.</li>
+    </ul>
+    <p class="home-cta"><a href="/job-radar/">Read the Job Radar case study</a></p>
+  </section>
+  <section class="home-section editorial-section reading-column" aria-labelledby="work-heading">
+    <h2 id="work-heading">How I work</h2>
+    <p>I begin by listening. Before proposing a process or solution, I want to understand what people are trying to accomplish, how the work actually moves, and where information, expectations, or ownership become unclear.</p>
+    <p>I am comfortable moving between strategic intent, implementation detail, and the human experience of using a system. I explain complexity plainly, invite correction, and make decisions explicit enough that people understand what happens next.</p>
+    <p>As a teammate, I bring patience, curiosity, directness, and follow-through. I value good ideas wherever they come from and help the team turn them into clear decisions and practical action. I care about carrying those decisions into practice and learning honestly from the result.</p>
+    <p>I do my best work with growing teams that need greater coherence without another layer of bureaucracy.</p>
+  </section>
+  <section class="home-section editorial-section reading-column" aria-labelledby="contact-heading">
+    <h2 id="contact-heading">Start a conversation</h2>
+    <p>I’m currently exploring Product Operations and Implementation leadership opportunities with growing SaaS teams.</p>
+    <p>If your team needs someone who can bring structure to ambiguous cross-functional work and remain accountable through execution, I’d like to talk.</p>
+    <div class="home-contact">
+      <a class="home-cta" href="mailto:contact@avecooper.com?subject=Portfolio%20conversation">Start a conversation</a>
+      <a href="mailto:contact@avecooper.com">contact@avecooper.com</a>
+    </div>
   </section>
 </SiteLayout>

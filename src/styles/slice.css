@@ -17,13 +17,48 @@
   padding-block: 0.5rem;
 }
 
-/* Reserve the approved portrait crop until the asset is available. */
-.portrait-placeholder {
+.home-portrait {
+  display: block;
   width: 100%;
   max-width: 24rem;
+  height: auto;
   aspect-ratio: 4 / 5;
-  background: #eeece5;
+  object-fit: cover;
+  object-position: center;
   border: 1px solid var(--color-rule);
+}
+
+.home-section p {
+  margin-block: 0 1.5rem;
+}
+
+.home-section p:last-child {
+  margin-bottom: 0;
+}
+
+.home-value + .home-value {
+  margin-top: 2.5rem;
+}
+
+.home-decisions {
+  margin-block: 0 2rem;
+  padding-left: 1.5rem;
+}
+
+.home-decisions li + li {
+  margin-top: 0.5rem;
+}
+
+.home-cta {
+  font-weight: 600;
+}
+
+.home-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  overflow-wrap: anywhere;
 }
 
 .editorial-section {
@@ -204,11 +239,19 @@ figcaption {
 
 @media print {
   .home-hero {
-    display: block;
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    gap: 1.5rem;
+    break-inside: avoid;
   }
 
-  .portrait-placeholder {
-    display: none;
+  .home-hero h1 {
+    font-size: 24pt;
+    line-height: 1.1;
+  }
+
+  .home-portrait {
+    display: block;
   }
 
   .editorial-section {
