@@ -12,12 +12,147 @@ import '../styles/slice.css';
     <h1>Job Radar</h1>
     <p class="lede">A private production system for finding, evaluating, and preparing for the right opportunities—without automating the judgment that matters.</p>
     <p class="project-attribution">Independent production project · Solo, AI-assisted development</p>
-    <dl class="project-overview">
-      <div><dt>Current state</dt><dd>Deployed and operating across a scheduled private-server service and a local Mac application-preparation workflow.</dd></div>
-      <div><dt>My role</dt><dd>Product definition, requirements, system and workflow design, implementation direction, review, validation, deployment, and ongoing production ownership.</dd></div>
-      <div><dt>Development approach</dt><dd>ChatGPT supported planning and architecture exploration, while Codex performed much of the direct repository implementation. I made the final design and product decisions, validated the resulting behavior, and accepted responsibility for the operating system.</dd></div>
-    </dl>
   </header>
+  <section class="editorial-section decision" aria-labelledby="trust-heading">
+    <div class="reading-column">
+      <h2 id="trust-heading">I needed a workflow I could trust</h2>
+      <p>A useful job-search system needed to do more than collect openings. It had to identify relevant roles beyond title keywords, retain what I had actually evaluated, connect an application to the exact posting that prompted it, and recognize when prior activity should affect a future alert.</p>
+      <p>Without a durable thread between those stages, I repeatedly had to reconstruct the same facts from changing career pages, alerts, notes, and files: what had changed, why the role mattered, and what I had already done.</p>
+      <p>I did not want a system that would apply automatically or make pursuit decisions for me. I wanted one that could preserve evidence, reduce repetitive work, and help me make better-informed decisions without taking those decisions away.</p>
+    </div>
+  </section>
+  <section class="editorial-section decision" aria-labelledby="built-heading">
+    <div class="reading-column">
+      <h2 id="built-heading">What I built</h2>
+      <p>Job Radar creates that durable thread.</p>
+      <p>Search runs as a scheduled service on my private server, where it monitors selected career pages, preserves posting history, evaluates potential matches, and sends alerts with persistent identifiers. Application Prep uses a verified read-only copy of that history while keeping sensitive career evidence, application materials, and private activity on my Mac.</p>
+      <p>Only a minimal engagement summary returns to Search, allowing future alerts to reflect relevant activity without exposing the underlying private data.</p>
+    </div>
+    <figure class="pending-evidence reading-column" aria-labelledby="evidence-a1-heading">
+      <h3 id="evidence-a1-heading">System at a glance</h3>
+      <p class="evidence-pending">Evidence pending.</p>
+      <figcaption>Job Radar connects scheduled public-source monitoring with private application work while keeping system authority and human decision rights explicit.</figcaption>
+    </figure>
+    <div class="reading-column project-facts">
+      <h3>Project overview</h3>
+      <dl class="project-overview">
+        <div><dt>Current state</dt><dd>Deployed and operating across a scheduled private-server service and a local Mac application-preparation workflow.</dd></div>
+        <div><dt>My role</dt><dd>Product definition, requirements, system and workflow design, implementation direction, review, validation, deployment, and ongoing production ownership.</dd></div>
+        <div><dt>Development approach</dt><dd>ChatGPT supported planning and architecture exploration, while Codex performed much of the direct repository implementation. I made the final design and product decisions, validated the resulting behavior, and accepted responsibility for the operating system.</dd></div>
+      </dl>
+    </div>
+    <details class="technical-detail reading-column">
+      <summary>Technical detail: Stack and deployment</summary>
+      <p>Job Radar is a Python command-line application backed by SQLite. Search adapters monitor Greenhouse, Lever, Ashby, and selected static career pages. A Dockerized Search service runs on TrueNAS, while Application Prep and its private Career data remain on my Mac.</p>
+      <p>Search creates a verified SQLite replica for local consumption. Application Prep uses ReportLab to render résumé PDFs and extracts their text for ATS inspection. A small JSON projection carries permitted engagement state in the opposite direction.</p>
+      <p>The deployment reflects the workflow rather than forcing every responsibility into one runtime: scheduled public-source monitoring belongs on the always-available server, while private and human-directed application work belongs on the Mac.</p>
+    </details>
+  </section>
+  <section class="editorial-section decision" aria-labelledby="five-decisions-heading">
+    <div class="reading-column">
+      <h2 id="five-decisions-heading">Five decisions shaped the system</h2>
+      <ol class="decision-list">
+        <li><strong>Preserve human judgment inside an automated workflow</strong></li>
+        <li><strong>Preserve provenance across changing sources</strong></li>
+        <li><strong>Separate systems according to privacy and responsibility</strong></li>
+        <li><strong>Share only the minimum useful state</strong></li>
+        <li><strong>Make reliability and recovery visible</strong></li>
+      </ol>
+      <p>Together, these decisions show how I approach ambiguous systems work: define what must remain true, make ownership explicit, accept tradeoffs deliberately, and validate the result beyond the happy path.</p>
+      <p class="evidence-note"><strong>Evidence note:</strong> Screenshots and application outputs use a fictional candidate, employers, and job-search history generated by the production application. No private career or application data is shown.</p>
+    </div>
+  </section>
+  <section class="editorial-section decision" aria-labelledby="decision-01-heading">
+    <div class="reading-column">
+      <p class="eyebrow">Decision 01</p>
+      <h2 id="decision-01-heading">Preserve human judgment inside an automated workflow</h2>
+      <p>A job search combines repetitive work suited to automation with decisions that represent me externally. I designed Job Radar to assist with the first category without inheriting authority over the second.</p>
+    </div>
+    <table class="editorial-table" role="table">
+      <thead role="rowgroup">
+        <tr role="row">
+          <th scope="col" id="decision-01-0" role="columnheader">Constraint</th>
+          <th scope="col" id="decision-01-1" role="columnheader">Decision</th>
+          <th scope="col" id="decision-01-2" role="columnheader">Accepted tradeoff</th>
+        </tr>
+      </thead>
+      <tbody role="rowgroup">
+        <tr role="row">
+          <th scope="row" id="decision-01-row-0" headers="decision-01-0" role="rowheader"><span class="cell-label" aria-hidden="true">Constraint</span>Application preparation benefits from automation, but its output represents me.</th>
+          <td headers="decision-01-1 decision-01-row-0" role="cell"><span class="cell-label" aria-hidden="true">Decision</span>Automate assistance while reserving approval and submission for me.</td>
+          <td headers="decision-01-2 decision-01-row-0" role="cell"><span class="cell-label" aria-hidden="true">Accepted tradeoff</span>More deliberate checkpoints than an end-to-end automated workflow.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="reading-column">
+      <p>Search can evaluate potential matches. Application Prep can assemble evidence, structure drafting tasks, validate content, render a résumé, and extract an ATS preview. AI can assist with research and drafting.</p>
+      <p>I decide whether to pursue an opportunity, which facts can be used, whether the materials are ready, and whether anything is submitted.</p>
+      <p>Those checkpoints add friction, but they prevent speed from being mistaken for trust. The result is faster preparation without allowing unreviewed output to become an accepted fact or external action.</p>
+    </div>
+    <figure class="pending-evidence reading-column" aria-labelledby="evidence-a2-heading">
+      <h3 id="evidence-a2-heading">Human-controlled automation</h3>
+      <p class="evidence-pending">Evidence pending.</p>
+      <figcaption>Job Radar prepares and validates the work, but it does not make pursuit decisions or submit applications. Each consequential step remains explicit and human-controlled.</figcaption>
+    </figure>
+    <figure class="pending-evidence reading-column" aria-labelledby="evidence-a3-heading">
+      <h3 id="evidence-a3-heading">Résumé and ATS preview</h3>
+      <p class="evidence-pending">Evidence pending.</p>
+      <figcaption>Job Radar renders the same trusted materials into a readable PDF and a clean ATS text stream. The system verifies the output; I decide whether to approve it. Submission remains separate.</figcaption>
+    </figure>
+    <aside class="demonstrates reading-column" aria-labelledby="decision-01-demonstrates-heading">
+      <h3 id="decision-01-demonstrates-heading">What this demonstrates</h3>
+      <p>I use automation to expand capacity while keeping ownership, approval, and accountability explicit.</p>
+    </aside>
+    <details class="technical-detail reading-column">
+      <summary>Technical detail: Protecting canonical career evidence</summary>
+      <p>Career evidence remains canonical and separate from generated material. A drafting task contains approved evidence and explicit instructions rather than granting the model unrestricted access to the private Career database.</p>
+      <p>AI-assisted work returns as structured draft content. Application Prep validates that content before it can enter the rendering workflow; a plausible paragraph is not accepted merely because it reads well. Draft content, render records, and approved materials remain distinguishable states.</p>
+      <p>The renderer creates a deterministic PDF from the validated content. Job Radar then extracts text from the produced file so I can inspect what an applicant-tracking system is likely to receive, not only what the designed page looks like. Final approval occurs after both views are available.</p>
+    </details>
+  </section>
+  <section class="editorial-section decision" aria-labelledby="decision-02-heading">
+    <div class="reading-column">
+      <p class="eyebrow">Decision 02</p>
+      <h2 id="decision-02-heading">Preserve provenance across changing sources</h2>
+      <p>Career pages are not stable records. A posting can be edited, closed, or reposted, and a company name plus job title is not enough to identify the exact opportunity I evaluated.</p>
+    </div>
+    <table class="editorial-table" role="table">
+      <thead role="rowgroup">
+        <tr role="row">
+          <th scope="col" id="decision-02-0" role="columnheader">Constraint</th>
+          <th scope="col" id="decision-02-1" role="columnheader">Decision</th>
+          <th scope="col" id="decision-02-2" role="columnheader">Accepted tradeoff</th>
+        </tr>
+      </thead>
+      <tbody role="rowgroup">
+        <tr role="row">
+          <th scope="row" id="decision-02-row-0" headers="decision-02-0" role="rowheader"><span class="cell-label" aria-hidden="true">Constraint</span>Source postings change, while an application must retain its original basis.</th>
+          <td headers="decision-02-1 decision-02-row-0" role="cell"><span class="cell-label" aria-hidden="true">Decision</span>Begin every application from a persisted match and pin the originating posting snapshot.</td>
+          <td headers="decision-02-2 decision-02-row-0" role="cell"><span class="cell-label" aria-hidden="true">Accepted tradeoff</span>Maintain explicit identifiers and history instead of relying on copied text.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="reading-column">
+      <p>Each alert includes a persisted Match ID. When I decide to pursue a role, Application Prep starts from that match, creates a durable application identity, and pins the exact posting snapshot that informed my decision.</p>
+      <p>Search can continue observing the source afterward. If the posting changes, the application retains both the version that prompted it and the newer version now available.</p>
+      <p>This requires more structure than saving a job description in a file. I accepted that cost because provenance is only useful when it survives changes to the source.</p>
+    </div>
+    <figure class="pending-evidence reading-column" aria-labelledby="evidence-a4-heading">
+      <h3 id="evidence-a4-heading">Alert to application</h3>
+      <p class="evidence-pending">Evidence pending.</p>
+      <figcaption>Job descriptions can change after I decide to pursue a role. Job Radar preserves the exact snapshot and match rationale behind that decision, then reports later source changes separately.</figcaption>
+    </figure>
+    <aside class="demonstrates reading-column" aria-labelledby="decision-02-demonstrates-heading">
+      <h3 id="decision-02-demonstrates-heading">What this demonstrates</h3>
+      <p>I design identity and traceability into a workflow instead of depending on names, memory, or the current state of an external system.</p>
+    </aside>
+    <details class="technical-detail reading-column">
+      <summary>Technical detail: Snapshots, matches, and durable application identity</summary>
+      <p>A posting identifies the opportunity observed at its source. A snapshot records what that source contained at a particular time. A match records the result of evaluating a specific posting snapshot against my search criteria.</p>
+      <p>Application creation begins with the Match ID rather than a typed company name or title. The resulting application stores its originating match and pins the corresponding snapshot. Later matches or snapshots may be linked without rewriting the original handoff.</p>
+      <p>The workflow rejects identifiers that belong to a different posting and treats repeated creation requests safely. Application status can display the pinned version beside the current Search version, preserving both historical provenance and present-day awareness.</p>
+    </details>
+  </section>
   <section class="editorial-section decision" aria-labelledby="decision-heading">
     <div class="reading-column">
       <p class="eyebrow">Decision 03</p>
@@ -86,4 +221,235 @@ import '../styles/slice.css';
 
     </details>
   </section>
+  <section class="editorial-section decision" aria-labelledby="decision-04-heading">
+    <div class="reading-column">
+      <p class="eyebrow">Decision 04</p>
+      <h2 id="decision-04-heading">Share only the minimum useful state</h2>
+      <p>Separating Search from Application Prep protected private information, but it created a useful constraint: Search still needed enough awareness of my activity to avoid sending alerts without relevant engagement context.</p>
+    </div>
+    <table class="editorial-table" role="table">
+      <thead role="rowgroup">
+        <tr role="row">
+          <th scope="col" id="decision-04-0" role="columnheader">Constraint</th>
+          <th scope="col" id="decision-04-1" role="columnheader">Decision</th>
+          <th scope="col" id="decision-04-2" role="columnheader">Accepted tradeoff</th>
+        </tr>
+      </thead>
+      <tbody role="rowgroup">
+        <tr role="row">
+          <th scope="row" id="decision-04-row-0" headers="decision-04-0" role="rowheader"><span class="cell-label" aria-hidden="true">Constraint</span>Search benefits from limited engagement awareness but does not need private application data.</th>
+          <td headers="decision-04-1 decision-04-row-0" role="cell"><span class="cell-label" aria-hidden="true">Decision</span>Publish a minimal, disposable projection instead of copying the Career database.</td>
+          <td headers="decision-04-2 decision-04-row-0" role="cell"><span class="cell-label" aria-hidden="true">Accepted tradeoff</span>The projection requires deliberate publication and can temporarily lag behind local activity.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="reading-column">
+      <p>Application Prep generates a small projection containing only the engagement facts Search needs. Career evidence, research, materials, and private notes remain on my Mac. The local database stays authoritative; the projection is derived, replaceable, and cannot modify its source.</p>
+      <p>Because publication is deliberate, Job Radar reports whether the projection has never been published, contains unpublished local changes, or is current. Search can warn when the projection is unavailable without losing its ability to monitor postings and send alerts.</p>
+      <p>I accepted the additional publication step because useful integration did not require unrestricted data sharing.</p>
+    </div>
+    <figure class="pending-evidence reading-column" aria-labelledby="evidence-a5-heading">
+      <h3 id="evidence-a5-heading">Private source and safe projection</h3>
+      <p class="evidence-pending">Evidence pending.</p>
+      <figcaption>Detailed application history stays on my Mac. Search receives only a stable posting identity and a broad engagement state—enough to stop resurfacing roles I have already acted on without exposing notes, materials, responses, or interview history.</figcaption>
+    </figure>
+    <aside class="demonstrates reading-column" aria-labelledby="decision-04-demonstrates-heading">
+      <h3 id="decision-04-demonstrates-heading">What this demonstrates</h3>
+      <p>I apply data minimization as a product decision, sharing information according to purpose rather than convenience.</p>
+    </aside>
+    <details class="technical-detail reading-column">
+      <summary>Technical detail: Projection states and publication verification</summary>
+      <p>Application Prep derives the engagement projection from the private Career database. The artifact contains a schema version, generation metadata, verification hashes, and only the application state required by Search. It can be deleted and regenerated without becoming a second source of truth.</p>
+      <p>Job Radar distinguishes three publication states: <code>never_published</code>, <code>unpublished_changes</code>, and <code>current</code>. A content hash identifies meaningful changes in engagement, while artifact-level verification protects the transferred file itself.</p>
+      <p>Publication stages the new projection on TrueNAS, verifies its checksum and expected permissions, and replaces the prior artifact only after verification succeeds. Application Prep records publication as confirmed only after the remote copy has been independently verified.</p>
+      <p>Search treats the projection as optional enrichment. Missing, stale, or malformed content produces explicit status or warning behavior without granting the projection authority over Search or preventing the core monitoring workflow from continuing safely.</p>
+    </details>
+  </section>
+  <section class="editorial-section decision" aria-labelledby="decision-05-heading">
+    <div class="reading-column">
+      <p class="eyebrow">Decision 05</p>
+      <h2 id="decision-05-heading">Make reliability and recovery visible</h2>
+      <p>A scheduled system can appear reliable while silently using stale data, losing a trusted file, or skipping part of its work. I wanted failure to produce an observable state and a defined response rather than an ambiguous result.</p>
+    </div>
+    <table class="editorial-table" role="table">
+      <thead role="rowgroup">
+        <tr role="row">
+          <th scope="col" id="decision-05-0" role="columnheader">Constraint</th>
+          <th scope="col" id="decision-05-1" role="columnheader">Decision</th>
+          <th scope="col" id="decision-05-2" role="columnheader">Accepted tradeoff</th>
+        </tr>
+      </thead>
+      <tbody role="rowgroup">
+        <tr role="row">
+          <th scope="row" id="decision-05-row-0" headers="decision-05-0" role="rowheader"><span class="cell-label" aria-hidden="true">Constraint</span>The workflow depends on changing websites, generated files, and transfers between systems.</th>
+          <td headers="decision-05-1 decision-05-row-0" role="cell"><span class="cell-label" aria-hidden="true">Decision</span>Define verification, failure behavior, and recovery as part of each feature’s contract.</td>
+          <td headers="decision-05-2 decision-05-row-0" role="cell"><span class="cell-label" aria-hidden="true">Accepted tradeoff</span>Spend more time on validation and operational behavior than the happy path alone requires.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="reading-column">
+      <p>I defined expected behavior for repeat runs, missing inputs, invalid content, incomplete transfers, and unavailable optional data. New files are verified before replacing trusted copies. Invalid material content is rejected before rendering. Status commands report what last succeeded, what failed, and whether local information still needs to be published.</p>
+      <p>Not every failure has the same consequence. For example, a missing engagement projection produces a warning while Search continues; losing that additional context should not prevent a valid alert from being sent.</p>
+      <p>This work added implementation and testing effort, but it made the system safer to operate and easier to diagnose.</p>
+    </div>
+    <figure class="pending-evidence reading-column" aria-labelledby="evidence-a6-heading">
+      <h3 id="evidence-a6-heading">Reliability and validation matrix</h3>
+      <p class="evidence-pending">Evidence pending.</p>
+      <figcaption>The synthetic demo exercised eight failure paths and safeguards. Each produced the intended behavior and preserved the state or artifact it was designed to protect.</figcaption>
+    </figure>
+    <figure class="pending-evidence reading-column" aria-labelledby="evidence-s1-heading">
+      <h3 id="evidence-s1-heading">Replica publication recovery sequence</h3>
+      <p class="evidence-pending">Evidence pending.</p>
+      <figcaption>When publication failed between the database and its manifest, Job Radar restored the prior valid pair. A clean retry then installed the complete replacement with no partial artifacts left behind.</figcaption>
+    </figure>
+    <div class="reading-column">
+      <h3>Review, revision, and acceptance</h3>
+      <p>Automated review once found that a schema definition rejected every valid résumé-content payload. I reopened the work, corrected the contract, reran controlled validation, and accepted the workflow only after deployment testing passed.</p>
+      <p>The review found the defect; accountability required responding to it and proving that the corrected system behaved as intended.</p>
+    </div>
+    <aside class="demonstrates reading-column" aria-labelledby="decision-05-demonstrates-heading">
+      <h3 id="decision-05-demonstrates-heading">What this demonstrates</h3>
+      <p>I treat implementation output as evidence to evaluate, not a result to accept automatically, and I make recovery behavior part of the product design.</p>
+    </aside>
+    <details class="technical-detail reading-column">
+      <summary>Technical detail: Staged transfers, failure handling, and recovery</summary>
+      <p>Transfers are staged before installation. Job Radar verifies the expected file, checksum, and related metadata before replacing trusted state; failed verification leaves the prior accepted copy in place. Where appropriate, rollback behavior restores the earlier artifact after an interrupted replacement.</p>
+      <p>Failure severity follows the responsibility of the affected feature. A failure that makes core Search results unsafe stops the operation. A failure in optional enrichment, such as an unavailable engagement projection, is reported without blocking an otherwise valid alert.</p>
+      <p>Validation begins in isolated scenarios with explicit data locations and expected outcomes. Successful controlled tests are followed by real-environment checks on the Mac and TrueNAS deployment. Status output makes the resulting operational state inspectable after the command completes.</p>
+    </details>
+  </section>
+  <section class="editorial-section decision" aria-labelledby="ai-collaboration-heading">
+    <div class="reading-column">
+      <p class="eyebrow">AI collaboration</p>
+      <h2 id="ai-collaboration-heading">Expand capacity while retaining accountability</h2>
+      <p>The same distinction between assistance and authority shaped how I built Job Radar. AI increased the scale and pace of work I could undertake independently; responsibility for what the system should do and whether it could be trusted remained mine.</p>
+    </div>
+    <table class="editorial-table ai-responsibility" role="table">
+      <thead role="rowgroup">
+        <tr role="row">
+          <th scope="col" id="ai-responsibility-0" role="columnheader">Activity</th>
+          <th scope="col" id="ai-responsibility-1" role="columnheader">My responsibility</th>
+          <th scope="col" id="ai-responsibility-2" role="columnheader">AI contribution</th>
+        </tr>
+      </thead>
+      <tbody role="rowgroup">
+        <tr role="row">
+          <th scope="row" id="ai-responsibility-row-0" headers="ai-responsibility-0" role="rowheader"><span class="cell-label" aria-hidden="true">Activity</span>Problem and scope</th>
+          <td headers="ai-responsibility-1 ai-responsibility-row-0" role="cell"><span class="cell-label" aria-hidden="true">My responsibility</span>Identified the need and decided what was worth solving</td>
+          <td headers="ai-responsibility-2 ai-responsibility-row-0" role="cell"><span class="cell-label" aria-hidden="true">AI contribution</span>Helped explore implications and clarify ambiguity</td>
+        </tr>
+        <tr role="row">
+          <th scope="row" id="ai-responsibility-row-1" headers="ai-responsibility-0" role="rowheader"><span class="cell-label" aria-hidden="true">Activity</span>Requirements</th>
+          <td headers="ai-responsibility-1 ai-responsibility-row-1" role="cell"><span class="cell-label" aria-hidden="true">My responsibility</span>Defined boundaries, constraints, and acceptance criteria</td>
+          <td headers="ai-responsibility-2 ai-responsibility-row-1" role="cell"><span class="cell-label" aria-hidden="true">AI contribution</span>Helped formalize decisions and surface missing cases</td>
+        </tr>
+        <tr role="row">
+          <th scope="row" id="ai-responsibility-row-2" headers="ai-responsibility-0" role="rowheader"><span class="cell-label" aria-hidden="true">Activity</span>Architecture</th>
+          <td headers="ai-responsibility-1 ai-responsibility-row-2" role="cell"><span class="cell-label" aria-hidden="true">My responsibility</span>Evaluated tradeoffs and accepted the final design</td>
+          <td headers="ai-responsibility-2 ai-responsibility-row-2" role="cell"><span class="cell-label" aria-hidden="true">AI contribution</span>Proposed options and identified risks</td>
+        </tr>
+        <tr role="row">
+          <th scope="row" id="ai-responsibility-row-3" headers="ai-responsibility-0" role="rowheader"><span class="cell-label" aria-hidden="true">Activity</span>Implementation</th>
+          <td headers="ai-responsibility-1 ai-responsibility-row-3" role="cell"><span class="cell-label" aria-hidden="true">My responsibility</span>Directed bounded work and reviewed resulting behavior</td>
+          <td headers="ai-responsibility-2 ai-responsibility-row-3" role="cell"><span class="cell-label" aria-hidden="true">AI contribution</span>Codex produced much of the code, tests, migrations, and repository changes</td>
+        </tr>
+        <tr role="row">
+          <th scope="row" id="ai-responsibility-row-4" headers="ai-responsibility-0" role="rowheader"><span class="cell-label" aria-hidden="true">Activity</span>Review</th>
+          <td headers="ai-responsibility-1 ai-responsibility-row-4" role="cell"><span class="cell-label" aria-hidden="true">My responsibility</span>Interpreted findings and decided what required correction</td>
+          <td headers="ai-responsibility-2 ai-responsibility-row-4" role="cell"><span class="cell-label" aria-hidden="true">AI contribution</span>Codex performed automated review and identified defects</td>
+        </tr>
+        <tr role="row">
+          <th scope="row" id="ai-responsibility-row-5" headers="ai-responsibility-0" role="rowheader"><span class="cell-label" aria-hidden="true">Activity</span>Validation and deployment</th>
+          <td headers="ai-responsibility-1 ai-responsibility-row-5" role="cell"><span class="cell-label" aria-hidden="true">My responsibility</span>Designed and executed controlled and production scenarios</td>
+          <td headers="ai-responsibility-2 ai-responsibility-row-5" role="cell"><span class="cell-label" aria-hidden="true">AI contribution</span>Helped create test plans, scripts, and diagnostic guidance</td>
+        </tr>
+        <tr role="row">
+          <th scope="row" id="ai-responsibility-row-6" headers="ai-responsibility-0" role="rowheader"><span class="cell-label" aria-hidden="true">Activity</span>Acceptance and accountability</th>
+          <td headers="ai-responsibility-1 ai-responsibility-row-6" role="cell"><span class="cell-label" aria-hidden="true">My responsibility</span>Decided whether the system could be trusted and owned its operation</td>
+          <td headers="ai-responsibility-2 ai-responsibility-row-6" role="cell"><span class="cell-label" aria-hidden="true">AI contribution</span>Held no authority to accept the result</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="reading-column">
+      <p>The collaboration worked because responsibility remained explicit. AI could propose, implement, and critique; I remained responsible for deciding what should exist and whether the result was safe to rely on.</p>
+    </div>
+    <aside class="demonstrates reading-column" aria-labelledby="ai-collaboration-demonstrates-heading">
+      <h3 id="ai-collaboration-demonstrates-heading">What this demonstrates</h3>
+      <p>I know how to turn AI into practical team leverage by giving it clear scope, evaluating what it produces, and retaining accountability for the outcome.</p>
+    </aside>
+    <details class="technical-detail reading-column">
+      <summary>Process detail: Bounded implementation, review, and acceptance</summary>
+      <p>I separated architecture and product decisions from implementation tasks. Before asking Codex to change the repository, I defined the goal, current constraints, exclusions, deliverables, and completion criteria for a bounded slice of work.</p>
+      <p>Codex implemented the slice and its tests, then performed automated review. I interpreted the findings, decided which issues reopened the work, and validated the corrected behavior in isolated scenarios before moving into the real Mac or TrueNAS environment.</p>
+      <p>The loop ended with human acceptance, not code generation or a passing automated review. That distinction prevented plausible implementation output from silently becoming an approved product decision.</p>
+    </details>
+  </section>
+  <section class="editorial-section decision" aria-labelledby="outcome-heading">
+    <div class="reading-column">
+      <p class="eyebrow">Operational outcome</p>
+      <h2 id="outcome-heading">A system I can operate and improve</h2>
+      <p>Job Radar now monitors configured career sites each day, preserves posting history, evaluates potential matches, and sends alerts. On my Mac, I can carry a persisted Match ID into research, material preparation, submission tracking, and employer response, then publish only the engagement information Search needs.</p>
+      <p>The system is intentionally narrow. It serves one user, monitors a configured set of employers, and retains deliberate preparation and publication steps. It is not a public job board, a general-purpose applicant tracker, or an automatic application service.</p>
+      <p>The most important result is not the volume of work automated. It is that I can rely on the workflow because its sources of truth, decision rights, privacy boundaries, and failure behavior are explicit.</p>
+      <p>Job Radar began as a way to make my own search more manageable. Building it required me to act as product owner, systems designer, operator, and final reviewer. It demonstrates the same approach I bring to a growing SaaS team: turn ambiguity into structure, use powerful tools deliberately, and remain accountable through execution.</p>
+    </div>
+  </section>
+  <section class="editorial-section decision" aria-labelledby="contact-heading">
+    <div class="reading-column">
+      <h2 id="contact-heading">Start a conversation</h2>
+      <p>If your team needs someone who can connect product intent, operational reality, and implementation detail—and stay involved until the system works in practice—I’d like to talk.</p>
+      <div class="case-contact">
+        <a href="mailto:contact@avecooper.com?subject=Portfolio%20conversation">Start a conversation</a>
+        <a href="mailto:contact@avecooper.com">contact@avecooper.com</a>
+      </div>
+    </div>
+  </section>
 </SiteLayout>
+
+<style>
+  .pending-evidence {
+    margin: 3rem 0;
+  }
+
+  .evidence-pending {
+    color: var(--color-muted);
+  }
+
+  .project-facts {
+    margin-bottom: 3rem;
+  }
+
+  .decision-list {
+    margin-block: 0 2rem;
+    padding-left: 1.5rem;
+  }
+
+  .decision-list li + li {
+    margin-top: 0.5rem;
+  }
+
+  .case-contact {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    overflow-wrap: anywhere;
+  }
+
+  @media screen and (max-width: 47rem) {
+    .ai-responsibility tbody th {
+      font-size: 1rem;
+      font-weight: 650;
+    }
+
+    .ai-responsibility tbody th .cell-label {
+      display: none;
+    }
+  }
+
+  @media print {
+    .technical-detail::details-content {
+      content-visibility: visible;
+    }
+  }
+</style>
