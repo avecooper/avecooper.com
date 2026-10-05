@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 736 400" role="img" aria-labelledby="s1-svg-title s1-svg-description">
+  <title id="s1-svg-title">Replica publication: restoration and verified retry</title>
+  <desc id="s1-svg-description">Five-step recovery sequence showing a valid database and manifest pair, an interrupted replacement, restoration of the prior pair, and successful verified retry.</desc>
+  <g font-family="inherit" font-size="16" fill="var(--color-ink, #1c1c1a)">
+    <text x="72" y="25" font-size="15" fill="var(--color-muted, #4f5551)">Database + manifest — one paired unit throughout</text>
+    <g fill="none" stroke="var(--color-rule, #c9cbc3)">
+      <path d="M 35 75 V 349"/>
+      <path d="m 31 101 4 5 4 -5 m -8 68 4 5 4 -5 m -8 68 4 5 4 -5 m -8 68 4 5 4 -5"/>
+      <path d="M 72 99 H 712 M 72 167 H 712 M 72 235 H 712 M 72 303 H 712"/>
+    </g>
+    <g fill="var(--color-paper, #f8f6f0)" stroke="var(--color-accent, #155b58)" stroke-width="2">
+      <circle cx="35" cy="65" r="17"/>
+      <circle cx="35" cy="133" r="17"/>
+      <circle cx="35" cy="201" r="17"/>
+      <circle cx="35" cy="269" r="17"/>
+      <circle cx="35" cy="337" r="17"/>
+    </g>
+    <g text-anchor="middle" font-weight="650" fill="var(--color-accent, #155b58)">
+      <text x="35" y="71">1</text>
+      <text x="35" y="139">2</text>
+      <text x="35" y="207">3</text>
+      <text x="35" y="275">4</text>
+      <text x="35" y="343">5</text>
+    </g>
+    <text x="72" y="71">Prior database + manifest pair is valid.</text>
+    <text x="72" y="139">A distinct candidate pair is staged.</text>
+    <text x="72" y="207">Publication is interrupted.</text>
+    <text x="72" y="263"><tspan x="72">The prior valid pair is restored;</tspan><tspan x="72" dy="23">no partial artifacts remain.</tspan></text>
+    <text x="72" y="331"><tspan x="72">Retry publishes and verifies</tspan><tspan x="72" dy="23">the complete candidate pair.</tspan></text>
+  </g>
+</svg>

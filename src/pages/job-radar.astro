@@ -4,6 +4,7 @@ import '../styles/slice.css';
 import systemOverview from '../../public/assets/job-radar/job-radar-system-overview.svg?raw';
 import postingProvenance from '../../public/assets/job-radar/posting-provenance-comparison.svg?raw';
 import engagementProjection from '../../public/assets/job-radar/privacy-safe-engagement-projection.svg?raw';
+import replicaRecovery from '../../public/assets/job-radar/replica-publication-recovery.svg?raw';
 
 const reliabilityCases = [
   ['Replica freshness record missing', 'Warn without damaging the readable replica', 'Degrade safely'],
@@ -473,9 +474,19 @@ Observed: 2026-04-14</pre>
       </table>
       <figcaption>The synthetic demo exercised eight failure paths and safeguards. Each produced the intended behavior and preserved the state or artifact it was designed to protect.</figcaption>
     </figure>
-    <figure class="pending-evidence reading-column" aria-labelledby="evidence-s1-heading">
+    <figure class="recovery-evidence reading-column" aria-labelledby="evidence-s1-heading">
       <h3 id="evidence-s1-heading">Replica publication recovery sequence</h3>
-      <p class="evidence-pending">Evidence pending.</p>
+      <div class="recovery-visual" aria-hidden="true" set:html={replicaRecovery} />
+      <div class="recovery-equivalent">
+        <p>Five-step recovery sequence showing a valid database and manifest pair, an interrupted replacement, restoration of the prior pair, and successful verified retry.</p>
+        <ol class="recovery-steps">
+          <li>Prior database + manifest pair is valid.</li>
+          <li>A distinct candidate pair is staged.</li>
+          <li>Publication is interrupted.</li>
+          <li>The prior valid pair is restored; no partial artifacts remain.</li>
+          <li>Retry publishes and verifies the complete candidate pair.</li>
+        </ol>
+      </div>
       <figcaption>When publication failed between the database and its manifest, Job Radar restored the prior valid pair. A clean retry then installed the complete replacement with no partial artifacts left behind.</figcaption>
     </figure>
     <div class="reading-column">
@@ -555,6 +566,16 @@ Observed: 2026-04-14</pre>
     </aside>
     <details class="technical-detail reading-column">
       <summary>Process detail: Bounded implementation, review, and acceptance</summary>
+      <ol class="ai-process-steps">
+        <li>Ambiguous need</li>
+        <li>Product and architecture decisions</li>
+        <li>Bounded implementation brief</li>
+        <li>Codex implementation and tests</li>
+        <li>Automated review</li>
+        <li>Revision and controlled validation</li>
+        <li>Production testing</li>
+        <li>Human acceptance</li>
+      </ol>
       <p>I separated architecture and product decisions from implementation tasks. Before asking Codex to change the repository, I defined the goal, current constraints, exclusions, deliverables, and completion criteria for a bounded slice of work.</p>
       <p>Codex implemented the slice and its tests, then performed automated review. I interpreted the findings, decided which issues reopened the work, and validated the corrected behavior in isolated scenarios before moving into the real Mac or TrueNAS environment.</p>
       <p>The loop ended with human acceptance, not code generation or a passing automated review. That distinction prevented plausible implementation output from silently becoming an approved product decision.</p>
@@ -830,12 +851,78 @@ Observed: 2026-04-14</pre>
     }
   }
 
-  .pending-evidence {
+  .recovery-evidence {
     margin: 3rem 0;
   }
 
-  .evidence-pending {
-    color: var(--color-muted);
+  .recovery-visual {
+    width: 100%;
+    max-width: 46rem;
+  }
+
+  .recovery-visual :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .recovery-equivalent {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .recovery-evidence figcaption {
+    margin-top: 1rem;
+  }
+
+  .recovery-steps,
+  .ai-process-steps {
+    margin: 0 0 1.5rem;
+    padding-left: 1.5rem;
+    overflow-wrap: anywhere;
+  }
+
+  .recovery-steps li + li {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .ai-process-steps li + li {
+    margin-top: 0.5rem;
+  }
+
+  @media screen and (max-width: 47rem) {
+    .recovery-visual {
+      display: none;
+    }
+
+    .recovery-equivalent {
+      position: static;
+      width: auto;
+      height: auto;
+      margin: 0;
+      overflow: visible;
+      clip-path: none;
+      white-space: normal;
+    }
+  }
+
+  @media print {
+    .recovery-visual {
+      display: block;
+    }
+
+    .recovery-evidence,
+    .ai-process-steps li {
+      break-inside: avoid;
+    }
   }
 
   .project-facts {
