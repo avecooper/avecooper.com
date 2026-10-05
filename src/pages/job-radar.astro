@@ -4,6 +4,17 @@ import '../styles/slice.css';
 import systemOverview from '../../public/assets/job-radar/job-radar-system-overview.svg?raw';
 import postingProvenance from '../../public/assets/job-radar/posting-provenance-comparison.svg?raw';
 import engagementProjection from '../../public/assets/job-radar/privacy-safe-engagement-projection.svg?raw';
+
+const reliabilityCases = [
+  ['Replica freshness record missing', 'Warn without damaging the readable replica', 'Degrade safely'],
+  ['Outdated match selected', 'Refuse the stale action; preserve the existing application', 'Reject safely'],
+  ['Engagement projection malformed', 'Omit optional annotations; preserve match identity', 'Degrade safely'],
+  ['Returned resume material invalid', 'Reject it before trusted publication', 'Reject safely'],
+  ['Same application started twice', 'Reuse the durable record instead of duplicating it', null],
+  ['Replica publication interrupted', 'Restore the prior valid pair; allow a clean retry', 'Recover safely'],
+  ['Reset target unsafe', 'Refuse before modifying any files', 'Reject safely'],
+  ['PDF publication interrupted', 'Preserve the prior complete document bundle', 'Recover safely'],
+];
 ---
 
 <SiteLayout
@@ -127,9 +138,31 @@ import engagementProjection from '../../public/assets/job-radar/privacy-safe-eng
       </div>
       <figcaption class="reading-column">Job Radar prepares and validates the work, but it does not make pursuit decisions or submit applications. Each consequential step remains explicit and human-controlled.</figcaption>
     </figure>
-    <figure class="pending-evidence reading-column" aria-labelledby="evidence-a3-heading">
+    <figure class="resume-ats-composite" aria-labelledby="evidence-a3-heading">
       <h3 id="evidence-a3-heading">Résumé and ATS preview</h3>
-      <p class="evidence-pending">Evidence pending.</p>
+      <div class="resume-ats-views">
+        <div>
+          <h4>Readable résumé</h4>
+          <img src="/assets/job-radar/morgan-coleman-resume-crop.webp" width="1472" height="618" loading="lazy" alt="Cropped synthetic résumé for Morgan Coleman, showing the professional summary, core capability, and complete first experience bullet. Education is excluded." />
+        </div>
+        <div>
+          <h4>Selectable ATS excerpt</h4>
+          <pre>MORGAN COLEMAN
+Product Operations Manager |
+Workflow Systems and Operational Analytics
+
+PROFESSIONAL SUMMARY
+Operations leader with experience delivering
+multi-site workflow systems, adoption, and
+measurable process improvement.</pre>
+        </div>
+      </div>
+      <ol class="materials-status" aria-label="Material validation and human authority states">
+        <li><span class="status-kind">Automated check</span>Rendered successfully</li>
+        <li><span class="status-kind">Automated check</span>ATS text validated</li>
+        <li class="human-authority"><span class="status-kind">Human approval</span>Human approved</li>
+        <li class="human-authority"><span class="status-kind">Separate submission decision</span>Not submitted</li>
+      </ol>
       <figcaption>Job Radar renders the same trusted materials into a readable PDF and a clean ATS text stream. The system verifies the output; I decide whether to approve it. Submission remains separate.</figcaption>
     </figure>
     <aside class="demonstrates reading-column" aria-labelledby="decision-01-demonstrates-heading">
@@ -416,9 +449,28 @@ Observed: 2026-04-14</pre>
       <p>Not every failure has the same consequence. For example, a missing engagement projection produces a warning while Search continues; losing that additional context should not prevent a valid alert from being sent.</p>
       <p>This work added implementation and testing effort, but it made the system safer to operate and easier to diagnose.</p>
     </div>
-    <figure class="pending-evidence reading-column" aria-labelledby="evidence-a6-heading">
+    <figure class="reliability-validation-matrix" aria-labelledby="evidence-a6-heading">
       <h3 id="evidence-a6-heading">Reliability and validation matrix</h3>
-      <p class="evidence-pending">Evidence pending.</p>
+      <p class="reliability-count"><strong>8 cases exercised · 8 safeguards verified</strong></p>
+      <p id="a6-summary" class="accessible-summary">Eight of eight exercised reliability cases passed, covering warnings, rejected stale or invalid input, idempotent reuse, guarded destructive behavior, rollback, and recovery.</p>
+      <table class="editorial-table" role="table" aria-labelledby="evidence-a6-heading" aria-describedby="a6-summary">
+        <thead role="rowgroup">
+          <tr role="row">
+            <th scope="col" id="a6-condition" role="columnheader">Exercised condition</th>
+            <th scope="col" id="a6-behavior" role="columnheader">Intended safe behavior</th>
+            <th scope="col" id="a6-result" role="columnheader">Verified result</th>
+          </tr>
+        </thead>
+        <tbody role="rowgroup">
+          {reliabilityCases.map(([condition, behavior, strategy], index) => (
+            <tr role="row">
+              <th scope="row" id={`a6-row-${index}`} headers="a6-condition" role="rowheader"><span class="cell-label" aria-hidden="true">Exercised condition</span>{condition}</th>
+              <td headers={`a6-behavior a6-row-${index}`} role="cell"><span class="cell-label" aria-hidden="true">Intended safe behavior</span>{behavior}{strategy && <span class="reliability-strategy">{strategy}</span>}</td>
+              <td headers={`a6-result a6-row-${index}`} role="cell"><span class="cell-label" aria-hidden="true">Verified result</span>Passed</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
       <figcaption>The synthetic demo exercised eight failure paths and safeguards. Each produced the intended behavior and preserved the state or artifact it was designed to protect.</figcaption>
     </figure>
     <figure class="pending-evidence reading-column" aria-labelledby="evidence-s1-heading">
@@ -531,6 +583,122 @@ Observed: 2026-04-14</pre>
 </SiteLayout>
 
 <style>
+  .resume-ats-composite,
+  .reliability-validation-matrix {
+    margin: 3rem 0;
+  }
+
+  .resume-ats-views {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  .resume-ats-views h4 {
+    margin: 0 0 0.75rem;
+    font-size: 1rem;
+  }
+
+  .resume-ats-views img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--color-rule);
+  }
+
+  .resume-ats-views pre {
+    margin: 0;
+    padding: 1rem;
+    border: 1px solid var(--color-rule);
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  .materials-status {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+    margin: 1.5rem 0;
+    padding-left: 1.5rem;
+  }
+
+  .materials-status li {
+    padding: 0.5rem;
+    border-top: 1px solid var(--color-rule);
+    overflow-wrap: anywhere;
+  }
+
+  .materials-status .human-authority {
+    border-top: 3px double var(--color-accent);
+    color: var(--color-accent);
+    font-weight: 650;
+  }
+
+  .status-kind {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-size: 0.8125rem;
+  }
+
+  .resume-ats-composite figcaption {
+    max-width: var(--width-reading);
+  }
+
+  .reliability-strategy {
+    display: block;
+    width: fit-content;
+    margin-top: 0.5rem;
+    padding: 0.125rem 0.5rem;
+    border: 1px solid var(--color-rule);
+    font-size: 0.8125rem;
+  }
+
+  .accessible-summary {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  @media screen and (max-width: 47rem) {
+    .resume-ats-views,
+    .materials-status {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .reliability-validation-matrix .editorial-table tr {
+      padding-block: 0.75rem;
+    }
+  }
+
+  @media print {
+    .resume-ats-composite {
+      break-inside: avoid;
+    }
+
+    .reliability-validation-matrix figcaption {
+      break-before: avoid;
+    }
+
+    .resume-ats-views {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .materials-status {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      font-size: 10pt;
+    }
+
+    .materials-status li {
+      break-inside: avoid;
+    }
+  }
+
   .comparison-evidence {
     margin: 3rem 0;
     max-width: var(--width-reading);
