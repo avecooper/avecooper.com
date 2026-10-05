@@ -304,3 +304,169 @@ figcaption {
     display: none;
   }
 }
+
+/* Authored SVGs inherit the page font; HTML carries the accessible content. */
+.diagram-evidence {
+  margin: 3rem 0;
+}
+
+.evidence-visual svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.evidence-equivalent {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.diagram-evidence figcaption {
+  margin-top: 1rem;
+}
+
+.evidence-flow {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.evidence-flow li + li {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-rule);
+}
+
+.human-checkpoint {
+  display: block;
+  margin-top: 0.5rem;
+  color: var(--color-accent);
+  font-weight: 650;
+}
+
+.workflow-pairs dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem 2rem;
+}
+
+.workflow-pairs dl,
+.workflow-pairs dd {
+  margin: 0;
+}
+
+.workflow-evidence {
+  overflow-wrap: anywhere;
+}
+
+.workflow-pairs dt {
+  margin-bottom: 0.25rem;
+  color: var(--color-muted);
+  font-size: 0.8125rem;
+  font-weight: 650;
+}
+
+.workflow-pairs dl div:last-child {
+  color: var(--color-accent);
+}
+
+.workflow-pairs .approval-boundary {
+  width: fit-content;
+  max-width: 100%;
+  justify-self: start;
+  overflow-wrap: anywhere;
+  margin: 1rem 0 0;
+  padding: 0.5rem 0.75rem;
+  border: 2px solid var(--color-accent);
+  color: var(--color-accent);
+}
+
+@media screen and (max-width: 47rem) {
+  .workflow-pairs dl {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .evidence-visual {
+    display: none;
+  }
+
+  .evidence-equivalent {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip-path: none;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
+@media print {
+  .diagram-evidence {
+    break-inside: avoid;
+  }
+
+  .evidence-visual {
+    display: block;
+    max-width: 46rem;
+  }
+}
+
+/* Screen choices never change the single diagram presentation in print. */
+.evidence-view-switch {
+  display: none;
+}
+
+@media screen and (width > 47rem) {
+  .evidence-view-switch {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 0 1rem;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--color-rule);
+    font-size: 0.9375rem;
+  }
+
+  .evidence-view-switch legend {
+    padding-inline: 0.25rem;
+    color: var(--color-muted);
+    font-size: 0.8125rem;
+    font-weight: 650;
+  }
+
+  .evidence-view-switch label {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    cursor: pointer;
+  }
+
+  .evidence-view-switch input {
+    margin: 0;
+    accent-color: var(--color-accent);
+  }
+
+  .diagram-evidence:has(#a1-view-list:checked) .evidence-visual {
+    display: none;
+  }
+
+  .diagram-evidence:has(#a1-view-list:checked) .evidence-equivalent {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip-path: none;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}

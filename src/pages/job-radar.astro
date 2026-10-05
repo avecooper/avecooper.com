@@ -1,6 +1,7 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
 import '../styles/slice.css';
+import systemOverview from '../../public/assets/job-radar/job-radar-system-overview.svg?raw';
 ---
 
 <SiteLayout
@@ -28,10 +29,24 @@ import '../styles/slice.css';
       <p>Search runs as a scheduled service on my private server, where it monitors selected career pages, preserves posting history, evaluates potential matches, and sends alerts with persistent identifiers. Application Prep uses a verified read-only copy of that history while keeping sensitive career evidence, application materials, and private activity on my Mac.</p>
       <p>Only a minimal engagement summary returns to Search, allowing future alerts to reflect relevant activity without exposing the underlying private data.</p>
     </div>
-    <figure class="pending-evidence reading-column" aria-labelledby="evidence-a1-heading">
+    <figure class="diagram-evidence reading-column" aria-labelledby="evidence-a1-heading">
       <h3 id="evidence-a1-heading">System at a glance</h3>
-      <p class="evidence-pending">Evidence pending.</p>
-      <figcaption>Job Radar connects scheduled public-source monitoring with private application work while keeping system authority and human decision rights explicit.</figcaption>
+      <fieldset class="evidence-view-switch">
+        <legend>System overview presentation</legend>
+        <label><input type="radio" name="a1-presentation" id="a1-view-diagram" value="diagram" checked /> Diagram</label>
+        <label><input type="radio" name="a1-presentation" id="a1-view-list" value="list" /> List</label>
+      </fieldset>
+      <div class="evidence-visual" aria-hidden="true" set:html={systemOverview} />
+      <div class="evidence-equivalent">
+        <ol class="evidence-flow">
+          <li><strong>Career pages → Search on private server</strong><br />Search monitors public postings, preserves history, evaluates matches automatically, and sends alerts. <span class="human-checkpoint">I evaluate the opportunity and choose whether to pursue.</span></li>
+          <li><strong>Search → Mac: Verified read-only copy</strong><br />Application Prep can read Search history without changing its authoritative record.</li>
+          <li><strong>Application Prep on Mac</strong><br />Research, prepare materials, and track activity. <span class="human-checkpoint">I approve facts, approve materials, and decide whether to submit. Submission is a separate human action.</span></li>
+          <li><strong>Mac → Search: Only a minimal engagement summary</strong><br />Private career evidence stays on the Mac.</li>
+          <li><strong>Return to contextual Search alerts</strong><br />Future Search alerts gain relevant context from the minimal engagement summary.</li>
+        </ol>
+      </div>
+      <figcaption class="reading-column">Job Radar connects scheduled public-source monitoring with private application work while keeping system authority and human decision rights explicit.</figcaption>
     </figure>
     <div class="reading-column project-facts">
       <h3>Project overview</h3>
@@ -89,10 +104,26 @@ import '../styles/slice.css';
       <p>I decide whether to pursue an opportunity, which facts can be used, whether the materials are ready, and whether anything is submitted.</p>
       <p>Those checkpoints add friction, but they prevent speed from being mistaken for trust. The result is faster preparation without allowing unreviewed output to become an accepted fact or external action.</p>
     </div>
-    <figure class="pending-evidence reading-column" aria-labelledby="evidence-a2-heading">
+    <figure class="diagram-evidence" aria-labelledby="evidence-a2-heading">
       <h3 id="evidence-a2-heading">Human-controlled automation</h3>
-      <p class="evidence-pending">Evidence pending.</p>
-      <figcaption>Job Radar prepares and validates the work, but it does not make pursuit decisions or submit applications. Each consequential step remains explicit and human-controlled.</figcaption>
+      <div class="workflow-evidence">
+        <ol class="evidence-flow workflow-pairs">
+          <li>
+            <dl><div><dt>System prepares</dt><dd>Observe and preserve postings</dd></div><div><dt>I decide</dt><dd>Choose whether to pursue</dd></div></dl>
+          </li>
+          <li>
+            <dl><div><dt>System prepares</dt><dd>Pin the selected evidence</dd></div><div><dt>I decide</dt><dd>Review research and apply decisions</dd></div></dl>
+          </li>
+          <li>
+            <dl><div><dt>System prepares</dt><dd>Validate, render, and ATS-check materials</dd></div><div><dt>I decide</dt><dd>Explicitly approve the materials</dd></div></dl>
+            <p class="approval-boundary"><strong>Approved ≠ submitted</strong></p>
+          </li>
+          <li>
+            <dl><div><dt>System prepares</dt><dd>Preserve application state</dd></div><div><dt>I decide</dt><dd>Submit separately—or do not submit</dd></div></dl>
+          </li>
+        </ol>
+      </div>
+      <figcaption class="reading-column">Job Radar prepares and validates the work, but it does not make pursuit decisions or submit applications. Each consequential step remains explicit and human-controlled.</figcaption>
     </figure>
     <figure class="pending-evidence reading-column" aria-labelledby="evidence-a3-heading">
       <h3 id="evidence-a3-heading">Résumé and ATS preview</h3>
