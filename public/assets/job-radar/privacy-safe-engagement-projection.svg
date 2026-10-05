@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 736 440" role="img" aria-labelledby="a5-svg-title a5-svg-description">
+  <title id="a5-svg-title">Privacy-safe engagement projection</title>
+  <desc id="a5-svg-description">One-way data flow from a private Career system containing detailed application information, through a projection containing only posting identity and engagement status, to simple Search annotations.</desc>
+  <defs>
+    <marker id="a5-svg-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--color-accent, #155b58)"/></marker>
+  </defs>
+  <g font-family="'Inter Variable', Inter, system-ui, sans-serif" font-size="16" fill="var(--color-ink, #1c1c1a)">
+    <g fill="none" stroke="var(--color-rule, #c9cbc3)">
+      <rect x="1" y="1" width="236" height="370"/>
+      <rect x="257" y="1" width="202" height="370"/>
+      <rect x="479" y="1" width="256" height="370"/>
+      <path d="M 17 106 H 221 M 273 106 H 443 M 495 106 H 719"/>
+    </g>
+    <g font-size="18" font-weight="650">
+      <text x="17" y="34">Private Career system</text>
+      <text x="273" y="34">Minimal projection</text>
+      <text x="495" y="34">Search annotation</text>
+    </g>
+    <g fill="var(--color-muted, #4f5551)">
+      <text x="17" y="70">Stays on my Mac</text>
+      <text x="273" y="70">Only this crosses</text>
+      <text x="495" y="70">Useful context</text>
+    </g>
+    <text x="17" y="142">Application dates</text>
+    <text x="17" y="179">Internal application IDs</text>
+    <text x="17" y="216">Notes</text>
+    <text x="17" y="253">Employer responses</text>
+    <text x="17" y="290">Interview details</text>
+    <text x="17" y="327">Materials and</text>
+    <text x="17" y="352">approval state</text>
+    <text x="273" y="142">Posting identity</text>
+    <text x="273" y="179">Engagement status</text>
+    <text x="495" y="142"><tspan>Civic Thread Software: </tspan><tspan x="495" dy="26">Already applied</tspan></text>
+    <text x="495" y="216"><tspan>Northline Relay: </tspan><tspan x="495" dy="26">Already applied</tspan></text>
+    <text x="495" y="290"><tspan>Ternary Grove Energy: </tspan><tspan x="495" dy="26">None</tspan></text>
+    <g fill="none" stroke="var(--color-accent, #155b58)" stroke-width="2" marker-end="url(#a5-svg-arrow)">
+      <path d="M 237 88 H 255"/>
+      <path d="M 459 88 H 477"/>
+    </g>
+    <text x="368" y="414" text-anchor="middle" font-weight="650" fill="var(--color-accent, #155b58)">Private database shared: No · Projection status: Current</text>
+  </g>
+</svg>

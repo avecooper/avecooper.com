@@ -2,6 +2,8 @@
 import SiteLayout from '../layouts/SiteLayout.astro';
 import '../styles/slice.css';
 import systemOverview from '../../public/assets/job-radar/job-radar-system-overview.svg?raw';
+import postingProvenance from '../../public/assets/job-radar/posting-provenance-comparison.svg?raw';
+import engagementProjection from '../../public/assets/job-radar/privacy-safe-engagement-projection.svg?raw';
 ---
 
 <SiteLayout
@@ -168,9 +170,41 @@ import systemOverview from '../../public/assets/job-radar/job-radar-system-overv
       <p>Search can continue observing the source afterward. If the posting changes, the application retains both the version that prompted it and the newer version now available.</p>
       <p>This requires more structure than saving a job description in a file. I accepted that cost because provenance is only useful when it survives changes to the source.</p>
     </div>
-    <figure class="pending-evidence reading-column" aria-labelledby="evidence-a4-heading">
+    <figure class="comparison-evidence reading-column" aria-labelledby="evidence-a4-heading">
       <h3 id="evidence-a4-heading">Alert to application</h3>
-      <p class="evidence-pending">Evidence pending.</p>
+      <div class="comparison-visual" aria-hidden="true" set:html={postingProvenance} />
+      <div class="comparison-equivalent">
+        <ol class="comparison-stages">
+          <li>
+            <h4>At selection</h4>
+            <dl>
+              <div><dt>Date</dt><dd>April 6–7, 2026</dd></div>
+              <div><dt>Employer</dt><dd>Northline Relay</dd></div>
+              <div><dt>Role</dt><dd>Product Operations Manager</dd></div>
+              <div><dt>Role fit</dt><dd>80</dd></div>
+              <div><dt>Snapshot</dt><dd>Snapshot 2 pinned</dd></div>
+            </dl>
+            <p><strong>Match rationale preserved</strong></p>
+            <ul>
+              <li>Strong title match</li>
+              <li>Workflow delivery / requirements delivery / operational analysis</li>
+              <li>Adoption enablement</li>
+            </ul>
+          </li>
+          <li>
+            <h4>Later observation</h4>
+            <dl>
+              <div><dt>Date</dt><dd>April 14, 2026</dd></div>
+              <div><dt>Employer</dt><dd>Northline Relay</dd></div>
+              <div><dt>Role</dt><dd>Product Operations Manager</dd></div>
+              <div><dt>Role fit</dt><dd>80</dd></div>
+              <div><dt>Snapshot</dt><dd>Current snapshot: 5</dd></div>
+              <div><dt>Change</dt><dd>Description updated · Updated: description</dd></div>
+            </dl>
+          </li>
+        </ol>
+        <p class="comparison-status">Same posting · Original evidence preserved</p>
+      </div>
       <figcaption>Job descriptions can change after I decide to pursue a role. Job Radar preserves the exact snapshot and match rationale behind that decision, then reports later source changes separately.</figcaption>
     </figure>
     <aside class="demonstrates reading-column" aria-labelledby="decision-02-demonstrates-heading">
@@ -181,6 +215,15 @@ import systemOverview from '../../public/assets/job-radar/job-radar-system-overv
       <summary>Technical detail: Snapshots, matches, and durable application identity</summary>
       <p>A posting identifies the opportunity observed at its source. A snapshot records what that source contained at a particular time. A match records the result of evaluating a specific posting snapshot against my search criteria.</p>
       <p>Application creation begins with the Match ID rather than a typed company name or title. The resulting application stores its originating match and pins the corresponding snapshot. Later matches or snapshots may be linked without rewriting the original handoff.</p>
+      <h4>Original and current source state</h4>
+      <p>Editorial extraction from the synthetic application view:</p>
+      <pre class="source-state-excerpt">Origin Match ID: 2
+Pinned snapshot: 2
+Selected: 2026-04-07
+
+Current Search snapshot: 5
+Recent Search event: UPDATED
+Observed: 2026-04-14</pre>
       <p>The workflow rejects identifiers that belong to a different posting and treats repeated creation requests safely. Application status can display the pinned version beside the current Search version, preserving both historical provenance and present-day awareness.</p>
     </details>
   </section>
@@ -279,9 +322,39 @@ import systemOverview from '../../public/assets/job-radar/job-radar-system-overv
       <p>Because publication is deliberate, Job Radar reports whether the projection has never been published, contains unpublished local changes, or is current. Search can warn when the projection is unavailable without losing its ability to monitor postings and send alerts.</p>
       <p>I accepted the additional publication step because useful integration did not require unrestricted data sharing.</p>
     </div>
-    <figure class="pending-evidence reading-column" aria-labelledby="evidence-a5-heading">
+    <figure class="comparison-evidence reading-column" aria-labelledby="evidence-a5-heading">
       <h3 id="evidence-a5-heading">Private source and safe projection</h3>
-      <p class="evidence-pending">Evidence pending.</p>
+      <div class="comparison-visual" aria-hidden="true" set:html={engagementProjection} />
+      <div class="comparison-equivalent">
+        <ol class="comparison-stages">
+          <li>
+            <h4>Private Career system — stays on my Mac</h4>
+            <ul>
+              <li>Application dates</li>
+              <li>Internal application IDs</li>
+              <li>Notes</li>
+              <li>Employer responses</li>
+              <li>Interview details</li>
+              <li>Materials and approval state</li>
+            </ul>
+          </li>
+          <li>
+            <h4>Minimal projection — only this crosses</h4>
+            <p>Private Career system → minimal projection</p>
+            <ul><li>Posting identity</li><li>Engagement status</li></ul>
+          </li>
+          <li>
+            <h4>Search annotation — useful context</h4>
+            <p>Minimal projection → Search</p>
+            <ul>
+              <li>Civic Thread Software: Already applied</li>
+              <li>Northline Relay: Already applied</li>
+              <li>Ternary Grove Energy: None</li>
+            </ul>
+          </li>
+        </ol>
+        <p class="comparison-status">Private database shared: No · Projection status: Current</p>
+      </div>
       <figcaption>Detailed application history stays on my Mac. Search receives only a stable posting identity and a broad engagement state—enough to stop resurfacing roles I have already acted on without exposing notes, materials, responses, or interview history.</figcaption>
     </figure>
     <aside class="demonstrates reading-column" aria-labelledby="decision-04-demonstrates-heading">
@@ -292,6 +365,26 @@ import systemOverview from '../../public/assets/job-radar/job-radar-system-overv
       <summary>Technical detail: Projection states and publication verification</summary>
       <p>Application Prep derives the engagement projection from the private Career database. The artifact contains a schema version, generation metadata, verification hashes, and only the application state required by Search. It can be deleted and regenerated without becoming a second source of truth.</p>
       <p>Job Radar distinguishes three publication states: <code>never_published</code>, <code>unpublished_changes</code>, and <code>current</code>. A content hash identifies meaningful changes in engagement, while artifact-level verification protects the transferred file itself.</p>
+      <h4>Northline Relay: publication-state comparison</h4>
+      <div class="publication-comparison">
+        <section aria-labelledby="a5-before-heading">
+          <h5 id="a5-before-heading">Before publication</h5>
+          <ul>
+            <li>Private state: <code>applied</code></li>
+            <li>Installed state: <code>in_progress</code></li>
+            <li>Status: <code>unpublished_changes</code></li>
+          </ul>
+        </section>
+        <section aria-labelledby="a5-after-heading">
+          <h5 id="a5-after-heading">After verified publication</h5>
+          <ul>
+            <li>Installed state: <code>applied</code></li>
+            <li>Search: <code>Already applied</code></li>
+            <li>Status: <code>current</code></li>
+          </ul>
+        </section>
+      </div>
+      <p>Job Radar detects when the privacy-safe projection no longer reflects the private source. Publication is confirmed before the projection is treated as current.</p>
       <p>Publication stages the new projection on TrueNAS, verifies its checksum and expected permissions, and replaces the prior artifact only after verification succeeds. Application Prep records publication as confirmed only after the remote copy has been independently verified.</p>
       <p>Search treats the projection as optional enrichment. Missing, stale, or malformed content produces explicit status or warning behavior without granting the projection authority over Search or preventing the core monitoring workflow from continuing safely.</p>
     </details>
@@ -438,6 +531,137 @@ import systemOverview from '../../public/assets/job-radar/job-radar-system-overv
 </SiteLayout>
 
 <style>
+  .comparison-evidence {
+    margin: 3rem 0;
+    max-width: var(--width-reading);
+  }
+
+  .comparison-visual {
+    width: 100%;
+    max-width: 46rem;
+  }
+
+  .comparison-visual :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .comparison-evidence figcaption {
+    margin-top: 1rem;
+  }
+
+  .comparison-equivalent {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .comparison-stages {
+    margin: 0;
+    padding-left: 1.5rem;
+  }
+
+  .comparison-stages > li + li {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .comparison-stages h4 {
+    margin: 0 0 1rem;
+    font-size: 1.125rem;
+  }
+
+  .comparison-stages dl {
+    margin: 0 0 1rem;
+  }
+
+  .comparison-stages dl div + div {
+    margin-top: 0.5rem;
+  }
+
+  .comparison-stages dt {
+    color: var(--color-muted);
+    font-size: 0.9375rem;
+  }
+
+  .comparison-stages dd {
+    margin: 0;
+  }
+
+  .comparison-stages ul,
+  .publication-comparison ul {
+    margin: 0;
+    padding-left: 1.25rem;
+  }
+
+  .comparison-status {
+    margin-top: 1.5rem;
+    color: var(--color-accent);
+    font-weight: 650;
+  }
+
+  .source-state-excerpt {
+    padding: 1rem;
+    border-left: 2px solid var(--color-rule);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  .publication-comparison {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    overflow-wrap: anywhere;
+  }
+
+  .publication-comparison h5 {
+    margin: 0 0 0.75rem;
+    font-size: 1rem;
+  }
+
+  @media screen and (max-width: 47rem) {
+    .comparison-visual {
+      display: none;
+    }
+
+    .comparison-equivalent {
+      position: static;
+      width: auto;
+      height: auto;
+      margin: 0;
+      overflow: visible;
+      clip-path: none;
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+
+    .publication-comparison {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media print {
+    .comparison-visual {
+      display: block;
+    }
+
+    .comparison-evidence,
+    .source-state-excerpt,
+    .publication-comparison section {
+      break-inside: avoid;
+    }
+  }
+
   .pending-evidence {
     margin: 3rem 0;
   }

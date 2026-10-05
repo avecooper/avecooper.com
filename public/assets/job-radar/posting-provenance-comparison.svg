@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 736 520" role="img" aria-labelledby="a4-svg-title a4-svg-description">
+  <title id="a4-svg-title">Posting provenance: selection and later observation</title>
+  <desc id="a4-svg-description">Comparison of a synthetic Northline Relay posting when selected and when reobserved later, showing that Snapshot 2 remains pinned while Snapshot 5 records a description update.</desc>
+  <g font-family="'Inter Variable', Inter, system-ui, sans-serif" font-size="16" fill="var(--color-ink, #1c1c1a)">
+    <g fill="none" stroke="var(--color-rule, #c9cbc3)">
+      <rect x="1" y="1" width="350" height="450"/>
+      <rect x="385" y="1" width="350" height="450"/>
+      <path d="M 25 180 H 327 M 409 180 H 711"/>
+    </g>
+    <g font-size="18" font-weight="650">
+      <text x="25" y="35">At selection</text>
+      <text x="409" y="35">Later observation</text>
+    </g>
+    <g fill="var(--color-muted, #4f5551)">
+      <text x="25" y="65">April 6–7, 2026</text>
+      <text x="409" y="65">April 14, 2026</text>
+    </g>
+    <text x="25" y="105" font-weight="650">Northline Relay</text>
+    <text x="409" y="105" font-weight="650">Northline Relay</text>
+    <text x="25" y="135">Product Operations Manager</text>
+    <text x="409" y="135">Product Operations Manager</text>
+    <text x="25" y="165">Role fit: 80</text>
+    <text x="409" y="165">Role fit: 80</text>
+    <g fill="var(--color-accent, #155b58)" font-weight="650">
+      <text x="25" y="215">Snapshot 2 pinned</text>
+      <text x="409" y="215">Current snapshot: 5</text>
+    </g>
+    <text x="25" y="249" font-weight="650">Match rationale preserved</text>
+    <text x="25" y="281">• Strong title match</text>
+    <text x="25" y="315">• Workflow delivery /</text>
+    <text x="39" y="341">requirements delivery /</text>
+    <text x="39" y="367">operational analysis</text>
+    <text x="25" y="405">• Adoption enablement</text>
+    <text x="409" y="249" font-weight="650">Description updated</text>
+    <text x="409" y="281">Updated: description</text>
+    <path d="M 176 451 V 470 H 560 V 451" fill="none" stroke="var(--color-accent, #155b58)" stroke-width="2"/>
+    <text x="368" y="505" text-anchor="middle" font-weight="650">Same posting · Original evidence preserved</text>
+  </g>
+</svg>
