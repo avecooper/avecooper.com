@@ -86,6 +86,28 @@ image pixels or binary metadata, external destinations, runtime JavaScript URLs,
 rendering, accessibility, image quality, or comprehensive security/privacy. Broader
 maintenance guidance belongs to PRJ-25; deployment remains separate.
 
+## Manual Pages deployment
+
+PR verification remains separate and unchanged. `deploy-pages.yml` runs only by
+manual dispatch from `main`; pushing or merging the workflow does not trigger it.
+PRJ-27 records the accepted full source SHA in Linear. At PRJ-28, Avery must compare
+that record with the required `accepted_sha` dispatch input and authorize publication.
+Dispatching or rerunning a deployment workflow is a publication action requiring
+authorization, not a validation step to run now.
+
+The workflow validates the full SHA, checks out that exact commit, confirms HEAD
+matches it, and runs `npm ci` followed by `npm run verify`. Only the freshly verified
+`dist/` is uploaded as the same-run Pages artifact; deployment depends on successful
+preparation. Logs and the job summary distinguish the source SHA from the workflow
+run's own revision. These checks establish identity and verification, not human
+acceptance.
+
+Pages must later be configured for GitHub Actions. Environment protection applies
+if configured; this project does not require a second reviewer. Environment,
+custom-domain, DNS, and HTTPS setup belong to PRJ-28. This workflow does not enable
+Pages or change those settings, and preserves the intended `avecooper.com` root URL.
+Broader operations documentation belongs to PRJ-25.
+
 ## Repository workflow
 
 - `main` is the stable branch.
