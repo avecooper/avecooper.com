@@ -216,14 +216,31 @@ h1 {
   body {
     background: white;
     color: black;
+    font-size: 11pt;
+    line-height: 1.45;
   }
 
   .site-main {
     min-height: 0;
-    padding-block: 2rem;
+    padding-block: 1rem;
   }
 
   .footer-inner {
-    padding-block: 1rem;
+    padding-block: 0.75rem;
+    break-inside: avoid;
+  }
+
+  .site-footer {
+    break-before: avoid;
+  }
+
+  h1 {
+    font-size: 26pt;
+  }
+
+  .lede {
+    margin-top: 1rem;
+    font-size: 12pt;
+    line-height: 1.45;
   }
 }
