@@ -1,0 +1,93 @@
+name: Deploy Pages
+
+on:
+  workflow_dispatch:
+    inputs:
+      accepted_sha:
+        description: Full source SHA accepted in PRJ-27; publication requires PRJ-28 authorization
+        required: true
+        type: string
+
+permissions: {}
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Validate dispatch ref and source SHA
+        id: source
+        shell: bash
+        env:
+          ACCEPTED_SHA: ${{ inputs.accepted_sha }}
+        run: |
+          if [[ "$GITHUB_REF" != refs/heads/main ]]; then
+            echo '::error::Deploy Pages must be dispatched from refs/heads/main.'
+            exit 1
+          fi
+          if [[ ! "$ACCEPTED_SHA" =~ ^[0-9a-fA-F]{40}$ ]]; then
+            echo '::error::accepted_sha must contain exactly 40 hexadecimal characters.'
+            exit 1
+          fi
+          normalized_sha=$(printf '%s' "$ACCEPTED_SHA" | tr 'A-F' 'a-f')
+          printf 'sha=%s\n' "$normalized_sha" >> "$GITHUB_OUTPUT"
+
+      - name: Check out exact source commit
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ steps.source.outputs.sha }}
+          persist-credentials: false
+
+      - name: Confirm source identity
+        shell: bash
+        env:
+          SOURCE_SHA: ${{ steps.source.outputs.sha }}
+        run: |
+          actual_sha=$(git rev-parse HEAD)
+          if [[ "$actual_sha" != "$SOURCE_SHA" ]]; then
+            echo '::error::Checked-out HEAD does not match the requested source SHA.'
+            exit 1
+          fi
+          printf 'Verified source SHA: %s\nWorkflow run revision: %s\n' "$actual_sha" "$GITHUB_SHA"
+          printf 'Verified source SHA: `%s`\n\nWorkflow run revision: `%s`\n\nIdentity verification does not prove human acceptance. Avery must compare this source SHA with the PRJ-27 record before authorizing publication in PRJ-28.\n' "$actual_sha" "$GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify fresh release output
+        run: npm run verify
+
+      - name: Upload verified Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          name: github-pages
+          path: ./dist
+
+  deploy:
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy verified Pages artifact
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages
