@@ -255,8 +255,8 @@ figcaption {
   }
 
   .editorial-section {
-    margin-top: 2rem;
-    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
   }
 
   .authority-evidence {
@@ -265,7 +265,10 @@ figcaption {
 
   h2,
   h3,
-  summary {
+  h4,
+  h5,
+  summary,
+  .eyebrow {
     break-after: avoid;
   }
 
@@ -282,6 +285,11 @@ figcaption {
     overflow: visible;
     clip-path: none;
     white-space: normal;
+    break-after: avoid;
+  }
+
+  .editorial-table tbody tr:first-child {
+    break-before: avoid;
   }
 
   .editorial-table tbody {
@@ -296,7 +304,7 @@ figcaption {
   .editorial-table th,
   .editorial-table td {
     display: table-cell;
-    padding: 0.75rem;
+    padding: 0.5rem 0.75rem;
     border-bottom: 1px solid var(--color-rule);
   }
 
@@ -409,7 +417,26 @@ figcaption {
 
 @media print {
   .diagram-evidence {
+    margin-block: 1.25rem;
     break-inside: avoid;
+  }
+
+  /* The HTML workflow can paginate between complete system/human pairs. */
+  .diagram-evidence:has(.workflow-evidence) {
+    break-inside: auto;
+  }
+
+  .workflow-pairs > li {
+    break-inside: avoid;
+  }
+
+  .workflow-pairs > li + li {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+  }
+
+  .diagram-evidence figcaption {
+    break-before: avoid;
   }
 
   .evidence-visual {
@@ -468,5 +495,49 @@ figcaption {
     clip-path: none;
     white-space: normal;
     overflow-wrap: anywhere;
+  }
+}
+
+@media print {
+  h2 {
+    margin-bottom: 1rem;
+    font-size: 18pt;
+  }
+
+  h3 {
+    margin-bottom: 0.75rem;
+    font-size: 12pt;
+  }
+
+  figcaption {
+    font-size: 10pt;
+    break-before: avoid;
+  }
+
+  .editorial-table thead th {
+    font-size: 10pt;
+  }
+
+  .home-section p,
+  .decision p {
+    margin-bottom: 0.75rem;
+  }
+
+  .project-attribution {
+    margin-block: 1rem 1.25rem;
+    font-size: 10pt;
+  }
+
+  .authority-evidence,
+  .demonstrates {
+    margin-block: 1.25rem;
+  }
+
+  .technical-detail {
+    padding-block: 0.75rem;
+  }
+
+  .technical-detail[open] summary {
+    margin-bottom: 0.75rem;
   }
 }
