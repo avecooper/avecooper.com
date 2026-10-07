@@ -27,4 +27,4 @@ jobs:
         run: npm ci
 
       - name: Validate
-        run: npm run validate
+        run: npm run verify
