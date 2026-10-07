@@ -1,119 +1,37 @@
 # avecooper.com
 
-Source for the public portfolio website at avecooper.com.
+Avery Cooper’s public portfolio, built as a static Astro site. The homepage (`/`)
+introduces Avery’s work; the Job Radar case study (`/job-radar/`) presents approved
+narrative and curated evidence of systems design and judgment.
 
-Built with Astro as a statically generated site.
+## Local setup
 
-## Local development
-
-Requires Node.js 24 and npm.
-
-Install dependencies:
+Use Node.js 24 and npm, matching both CI workflows. The package engine declaration
+is broader (`>=22.12.0`); Node 24 is the supported project setup.
 
 ```sh
 npm ci
 ```
 
-Start the local development server:
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Development server while editing |
+| `npm run check` | Astro diagnostics |
+| `npm run build` | Production build in `dist/` |
+| `npm run preview` | Serve the existing production build locally |
+| `npm run validate` | Diagnostics and production build |
+| `npm run verify` | Unified release check, including a fresh build |
+| `npm run astro -- --help` | Astro CLI help |
 
-```sh
-npm run dev
-```
+For final rendered review, run `npm run verify`, then `npm run preview`.
+See [maintenance guidance](docs/maintenance.md) for editing locations, evidence
+privacy, validation limits, and release procedures. Agents should also read
+[AGENTS.md](AGENTS.md).
 
-Run Astro diagnostics:
+## Publication status
 
-```sh
-npm run check
-```
-
-Create a production build:
-
-```sh
-npm run build
-```
-
-Run the established diagnostics and production build:
-
-```sh
-npm run validate
-```
-
-## Release verification
-
-```sh
-npm run verify
-```
-
-PRs run this command. It removes only this repository's fixed `dist/` directory
-(refusing symlinks or unsafe resolution), runs unchanged `npm run validate`, runs
-focused Node checker tests, then checks the fresh build and public inventory.
-Build/test failures stop the command; release findings are aggregated. Any failure
-exits nonzero. Diagnostics show relative files and rule names, never matched
-credentials or rejected URL payloads.
-
-Checks cover both required routes, local navigation and fragment targets (including
-cross-page and same-site absolute URLs), HTML resources and srcset, CSS imports,
-fonts and URLs, and inline/standalone SVG references. Encoded paths, queries and
-SVG IDs are handled separately. External HTTP(S), protocol-relative, mailto, data
-and other schemes receive local URL syntax handling only; their destinations are
-not contacted. Embedded data resources have no filesystem check. SVG inspection
-checks references, not XML structure or rendering.
-
-Privacy checks inspect `public/` and build filenames and readable HTML, SVG, CSS,
-JS, JSON and text (also XML, YAML, CSV and logs). Rules reject local path signatures
-(`/Users/`, `/home/`, `/mnt/`, `/data/`, `~/`, Windows user paths, UNC and `file:`),
-local infrastructure URLs, URL credentials, PEM/OpenSSH private-key headers,
-AWS `AKIA`, GitHub token and OpenAI `sk-` prefixes, and concrete assignments to
-`API_KEY`, `ACCESS_TOKEN`, `CLIENT_SECRET` or `PASSWORD`. They also reject environment,
-key, database, backup/archive, PDF and source-map files, SQLite signatures, and
-storyboard-excluded raw evidence filenames/directories. There is no entropy scan,
-contact-address ban, narrative keyword ban or generic identifier/JSON ban.
-
-The explicit `publicFiles` list in `scripts/verify.mjs` contains the two favicons,
-four authored Job Radar SVGs and approved résumé WebP. Intentional public additions
-require updating that list. The same Job Radar asset restriction applies to build
-output; generated Astro assets elsewhere are allowed. Approved contacts, fictional
-names, evidence numbers/dates, asset hashes and SVG IDs remain allowed.
-
-The checker imports `ultrahtml`, `html-escaper` and `css-tree` through ordinary module
-resolution from the current locked transitive dependencies. No browser DOM or new
-dependency is required. Dependency updates must preserve availability; missing
-parsers fail explicitly rather than skipping checks. Tests use temporary fixtures
-and never inject faults into real source or assets.
-
-These narrow checks do not certify private facts, unfamiliar encodings/credentials,
-image pixels or binary metadata, external destinations, runtime JavaScript URLs,
-rendering, accessibility, image quality, or comprehensive security/privacy. Broader
-maintenance guidance belongs to PRJ-25; deployment remains separate.
-
-## Manual Pages deployment
-
-PR verification remains separate and unchanged. `deploy-pages.yml` runs only by
-manual dispatch from `main`; pushing or merging the workflow does not trigger it.
-PRJ-27 records the accepted full source SHA in Linear. At PRJ-28, Avery must compare
-that record with the required `accepted_sha` dispatch input and authorize publication.
-Dispatching or rerunning a deployment workflow is a publication action requiring
-authorization, not a validation step to run now.
-
-The workflow validates the full SHA, checks out that exact commit, confirms HEAD
-matches it, and runs `npm ci` followed by `npm run verify`. Only the freshly verified
-`dist/` is uploaded as the same-run Pages artifact; deployment depends on successful
-preparation. Logs and the job summary distinguish the source SHA from the workflow
-run's own revision. These checks establish identity and verification, not human
-acceptance.
-
-Pages must later be configured for GitHub Actions. Environment protection applies
-if configured; this project does not require a second reviewer. Environment,
-custom-domain, DNS, and HTTPS setup belong to PRJ-28. This workflow does not enable
-Pages or change those settings, and preserves the intended `avecooper.com` root URL.
-Broader operations documentation belongs to PRJ-25.
-
-## Repository workflow
-
-- `main` is the stable branch.
-- Implementation work happens on issue-scoped branches.
-- Open a pull request into `main` for implementation changes.
-- Pull requests run the repository validation workflow before merge.
-- PR validation checks the site but does not deploy it.
-- Deployment and custom-domain configuration are handled separately.
-- Private career data, production Job Radar data, and other private source material do not belong in this public repository.
+Manual GitHub Pages deployment is prepared, but Pages configuration, custom-domain,
+DNS, and HTTPS setup and actual publication have not been performed. PR verification
+does not deploy the site. Publication requires prior human acceptance and explicit
+authorization; see the [release procedure](docs/maintenance.md#release-and-publication).
+Update this status after authorized setup and deployment have been checked.
