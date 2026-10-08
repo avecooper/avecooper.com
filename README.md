@@ -30,8 +30,9 @@ privacy, validation limits, and release procedures. Agents should also read
 
 ## Publication status
 
-Manual GitHub Pages deployment is prepared, but Pages configuration, custom-domain,
-DNS, and HTTPS setup and actual publication have not been performed. PR verification
-does not deploy the site. Publication requires prior human acceptance and explicit
-authorization; see the [release procedure](docs/maintenance.md#release-and-publication).
-Update this status after authorized setup and deployment have been checked.
+The portfolio is live at https://avecooper.com/, with the case study at
+https://avecooper.com/job-radar/. The public MVP was accepted October 8, 2026.
+GitHub Pages, the custom domain, DNS, and enforced HTTPS are configured.
+PR verification does not deploy; subsequent publication still requires human
+acceptance and explicit authorization. See the
+[release procedure](docs/maintenance.md#release-and-publication).
