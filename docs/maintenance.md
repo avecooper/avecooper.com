@@ -149,8 +149,9 @@ Node 24 and runs `npm run verify` on PRs targeting `main`. It does not deploy.
 Follow [agent authorization guidance](../AGENTS.md) for actions not already authorized.
 
 1. Complete local verification, rendered/content/privacy review, and human acceptance.
-   Record the accepted **full source commit SHA**. The current workflow references
-   the PRJ-27 acceptance record and PRJ-28 publication authorization.
+   Record the accepted **full source commit SHA**. PRJ-27 and PRJ-28 are the initial
+   launch’s acceptance and publication authorization records, respectively. Future
+   releases require their own explicit accepted SHA and publication authorization.
 2. Before publication, Avery compares the acceptance record with the exact required
    `accepted_sha` input and authorizes dispatch. Dispatch or rerun is a publication
    action, not a local validation step. Existing explicit publication authorization
@@ -170,13 +171,19 @@ SHA equals the current main tip or establish its ancestry. Supply the human-acce
 source deliberately. Environment protection applies if configured; the project does
 not require a second reviewer.
 
-Pages must be configured to use GitHub Actions during authorized hosting setup.
-The workflow does not enable Pages or configure the custom domain, DNS, or HTTPS.
-Preserve the intended `avecooper.com` root URL when performing that future setup.
+GitHub Pages is configured to use GitHub Actions, and the custom domain, DNS, and
+enforced HTTPS are configured for https://avecooper.com/. The workflow does not
+enable Pages or configure the custom domain, DNS, or HTTPS. Preserve the
+`avecooper.com` root URL when maintaining that setup.
 
-Pages/domain/DNS/HTTPS setup and actual publication have not been performed. After
-authorized deployment, check the live homepage and case-study routes, assets,
-navigation/fragments, contact actions, responsive rendering, and deployed privacy
+The public MVP was accepted October 8, 2026, and is live at
+https://avecooper.com/ and https://avecooper.com/job-radar/. The initial deployed
+source SHA is `e110763c61f56bcd80033db3b90bd5007d63b9d6`. Deployed mobile and desktop
+behavior, links, HTTPS and redirects, and contact-email operation were verified.
+This documentation update does not change the deployed source SHA.
+
+After each subsequent authorized deployment, check the live homepage and case-study
+routes, assets, navigation/fragments, contact actions, responsive rendering, and deployed privacy
 output; confirm the intended domain, DNS resolution, and HTTPS behavior. Local checks
 do not establish these results. Record what was actually checked and update this
-status and the README once setup and publication are confirmed.
+status and the README as appropriate once publication is confirmed.
